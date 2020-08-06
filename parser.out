@@ -1,0 +1,2346 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ERROR
+
+Grammar
+
+Rule 0     S' -> Prog
+Rule 1     Prog -> MAIN OPENPAR CLOSEPAR Block
+Rule 2     Block -> OPENBLK SeqCom CLOSEBLK
+Rule 3     SeqCom -> SeqCom Com
+Rule 4     SeqCom -> Com
+Rule 5     Com -> Simple
+Rule 6     Com -> Block
+Rule 7     Simple -> Atrib
+Rule 8     Simple -> Decision
+Rule 9     Simple -> Loop
+Rule 10    Simple -> Input
+Rule 11    Simple -> Output
+Rule 12    Simple -> Specials
+Rule 13    Atrib -> IDENT ATRIB Exp PTOVIR
+Rule 14    Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com
+Rule 15    Decision -> IF OPENPAR Test CLOSEPAR Com
+Rule 16    Loop -> WHILE OPENPAR Test CLOSEPAR Com
+Rule 17    Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR
+Rule 18    Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR
+Rule 19    Specials -> BREAK PTOVIR
+Rule 20    Specials -> CONTINUE PTOVIR
+Rule 21    Test -> Exp
+Rule 22    Exp -> Exp AND Exp
+Rule 23    Exp -> Exp OR Exp
+Rule 24    Exp -> NOT Exp
+Rule 25    Exp -> Exp EQUAL Exp
+Rule 26    Exp -> Exp DIF Exp
+Rule 27    Exp -> Exp GT Exp
+Rule 28    Exp -> Exp GTE Exp
+Rule 29    Exp -> Exp LT Exp
+Rule 30    Exp -> Exp LTE Exp
+Rule 31    Exp -> Exp DIV Exp
+Rule 32    Exp -> Exp MOD Exp
+Rule 33    Exp -> Exp TIMES Exp
+Rule 34    Exp -> Exp PLUS Exp
+Rule 35    Exp -> Exp MINUS Exp
+Rule 36    Exp -> MINUS Exp
+Rule 37    Exp -> PLUS Exp
+Rule 38    Exp -> OPENPAR Exp CLOSEPAR
+Rule 39    Exp -> IDENT
+Rule 40    Exp -> NUMBER
+
+Terminals, with rules where they appear
+
+AND                  : 22
+ATRIB                : 13
+BREAK                : 19
+CLOSEBLK             : 2
+CLOSEPAR             : 1 14 15 16 17 18 38
+CONTINUE             : 20
+DIF                  : 26
+DIV                  : 31
+ELSE                 : 14
+EQUAL                : 25
+ERROR                : 
+GT                   : 27
+GTE                  : 28
+IDENT                : 13 17 18 39
+IF                   : 14 15
+LT                   : 29
+LTE                  : 30
+MAIN                 : 1
+MINUS                : 35 36
+MOD                  : 32
+NOT                  : 24
+NUMBER               : 40
+OPENBLK              : 2
+OPENPAR              : 1 14 15 16 17 18 38
+OR                   : 23
+PLUS                 : 34 37
+PRINT                : 17
+PTOVIR               : 13 17 18 19 20
+READ                 : 18
+TIMES                : 33
+WHILE                : 16
+error                : 
+
+Nonterminals, with rules where they appear
+
+Atrib                : 7
+Block                : 1 6
+Com                  : 3 4 14 14 15 16
+Decision             : 8
+Exp                  : 13 21 22 22 23 23 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 37 38
+Input                : 10
+Loop                 : 9
+Output               : 11
+Prog                 : 0
+SeqCom               : 2 3
+Simple               : 5
+Specials             : 12
+Test                 : 14 15 16
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . Prog
+    (1) Prog -> . MAIN OPENPAR CLOSEPAR Block
+
+    MAIN            shift and go to state 2
+
+    Prog                           shift and go to state 1
+
+state 1
+
+    (0) S' -> Prog .
+
+
+
+state 2
+
+    (1) Prog -> MAIN . OPENPAR CLOSEPAR Block
+
+    OPENPAR         shift and go to state 3
+
+
+state 3
+
+    (1) Prog -> MAIN OPENPAR . CLOSEPAR Block
+
+    CLOSEPAR        shift and go to state 4
+
+
+state 4
+
+    (1) Prog -> MAIN OPENPAR CLOSEPAR . Block
+    (2) Block -> . OPENBLK SeqCom CLOSEBLK
+
+    OPENBLK         shift and go to state 6
+
+    Block                          shift and go to state 5
+
+state 5
+
+    (1) Prog -> MAIN OPENPAR CLOSEPAR Block .
+
+    $end            reduce using rule 1 (Prog -> MAIN OPENPAR CLOSEPAR Block .)
+
+
+state 6
+
+    (2) Block -> OPENBLK . SeqCom CLOSEBLK
+    (3) SeqCom -> . SeqCom Com
+    (4) SeqCom -> . Com
+    (5) Com -> . Simple
+    (6) Com -> . Block
+    (7) Simple -> . Atrib
+    (8) Simple -> . Decision
+    (9) Simple -> . Loop
+    (10) Simple -> . Input
+    (11) Simple -> . Output
+    (12) Simple -> . Specials
+    (2) Block -> . OPENBLK SeqCom CLOSEBLK
+    (13) Atrib -> . IDENT ATRIB Exp PTOVIR
+    (14) Decision -> . IF OPENPAR Test CLOSEPAR Com ELSE Com
+    (15) Decision -> . IF OPENPAR Test CLOSEPAR Com
+    (16) Loop -> . WHILE OPENPAR Test CLOSEPAR Com
+    (18) Input -> . READ OPENPAR IDENT CLOSEPAR PTOVIR
+    (17) Output -> . PRINT OPENPAR IDENT CLOSEPAR PTOVIR
+    (19) Specials -> . BREAK PTOVIR
+    (20) Specials -> . CONTINUE PTOVIR
+
+    OPENBLK         shift and go to state 6
+    IDENT           shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    READ            shift and go to state 20
+    PRINT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONTINUE        shift and go to state 23
+
+    SeqCom                         shift and go to state 7
+    Com                            shift and go to state 8
+    Simple                         shift and go to state 9
+    Block                          shift and go to state 10
+    Atrib                          shift and go to state 11
+    Decision                       shift and go to state 12
+    Loop                           shift and go to state 13
+    Input                          shift and go to state 14
+    Output                         shift and go to state 15
+    Specials                       shift and go to state 16
+
+state 7
+
+    (2) Block -> OPENBLK SeqCom . CLOSEBLK
+    (3) SeqCom -> SeqCom . Com
+    (5) Com -> . Simple
+    (6) Com -> . Block
+    (7) Simple -> . Atrib
+    (8) Simple -> . Decision
+    (9) Simple -> . Loop
+    (10) Simple -> . Input
+    (11) Simple -> . Output
+    (12) Simple -> . Specials
+    (2) Block -> . OPENBLK SeqCom CLOSEBLK
+    (13) Atrib -> . IDENT ATRIB Exp PTOVIR
+    (14) Decision -> . IF OPENPAR Test CLOSEPAR Com ELSE Com
+    (15) Decision -> . IF OPENPAR Test CLOSEPAR Com
+    (16) Loop -> . WHILE OPENPAR Test CLOSEPAR Com
+    (18) Input -> . READ OPENPAR IDENT CLOSEPAR PTOVIR
+    (17) Output -> . PRINT OPENPAR IDENT CLOSEPAR PTOVIR
+    (19) Specials -> . BREAK PTOVIR
+    (20) Specials -> . CONTINUE PTOVIR
+
+    CLOSEBLK        shift and go to state 24
+    OPENBLK         shift and go to state 6
+    IDENT           shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    READ            shift and go to state 20
+    PRINT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONTINUE        shift and go to state 23
+
+    Com                            shift and go to state 25
+    Simple                         shift and go to state 9
+    Block                          shift and go to state 10
+    Atrib                          shift and go to state 11
+    Decision                       shift and go to state 12
+    Loop                           shift and go to state 13
+    Input                          shift and go to state 14
+    Output                         shift and go to state 15
+    Specials                       shift and go to state 16
+
+state 8
+
+    (4) SeqCom -> Com .
+
+    CLOSEBLK        reduce using rule 4 (SeqCom -> Com .)
+    OPENBLK         reduce using rule 4 (SeqCom -> Com .)
+    IDENT           reduce using rule 4 (SeqCom -> Com .)
+    IF              reduce using rule 4 (SeqCom -> Com .)
+    WHILE           reduce using rule 4 (SeqCom -> Com .)
+    READ            reduce using rule 4 (SeqCom -> Com .)
+    PRINT           reduce using rule 4 (SeqCom -> Com .)
+    BREAK           reduce using rule 4 (SeqCom -> Com .)
+    CONTINUE        reduce using rule 4 (SeqCom -> Com .)
+
+
+state 9
+
+    (5) Com -> Simple .
+
+    CLOSEBLK        reduce using rule 5 (Com -> Simple .)
+    OPENBLK         reduce using rule 5 (Com -> Simple .)
+    IDENT           reduce using rule 5 (Com -> Simple .)
+    IF              reduce using rule 5 (Com -> Simple .)
+    WHILE           reduce using rule 5 (Com -> Simple .)
+    READ            reduce using rule 5 (Com -> Simple .)
+    PRINT           reduce using rule 5 (Com -> Simple .)
+    BREAK           reduce using rule 5 (Com -> Simple .)
+    CONTINUE        reduce using rule 5 (Com -> Simple .)
+    ELSE            reduce using rule 5 (Com -> Simple .)
+
+
+state 10
+
+    (6) Com -> Block .
+
+    CLOSEBLK        reduce using rule 6 (Com -> Block .)
+    OPENBLK         reduce using rule 6 (Com -> Block .)
+    IDENT           reduce using rule 6 (Com -> Block .)
+    IF              reduce using rule 6 (Com -> Block .)
+    WHILE           reduce using rule 6 (Com -> Block .)
+    READ            reduce using rule 6 (Com -> Block .)
+    PRINT           reduce using rule 6 (Com -> Block .)
+    BREAK           reduce using rule 6 (Com -> Block .)
+    CONTINUE        reduce using rule 6 (Com -> Block .)
+    ELSE            reduce using rule 6 (Com -> Block .)
+
+
+state 11
+
+    (7) Simple -> Atrib .
+
+    CLOSEBLK        reduce using rule 7 (Simple -> Atrib .)
+    OPENBLK         reduce using rule 7 (Simple -> Atrib .)
+    IDENT           reduce using rule 7 (Simple -> Atrib .)
+    IF              reduce using rule 7 (Simple -> Atrib .)
+    WHILE           reduce using rule 7 (Simple -> Atrib .)
+    READ            reduce using rule 7 (Simple -> Atrib .)
+    PRINT           reduce using rule 7 (Simple -> Atrib .)
+    BREAK           reduce using rule 7 (Simple -> Atrib .)
+    CONTINUE        reduce using rule 7 (Simple -> Atrib .)
+    ELSE            reduce using rule 7 (Simple -> Atrib .)
+
+
+state 12
+
+    (8) Simple -> Decision .
+
+    CLOSEBLK        reduce using rule 8 (Simple -> Decision .)
+    OPENBLK         reduce using rule 8 (Simple -> Decision .)
+    IDENT           reduce using rule 8 (Simple -> Decision .)
+    IF              reduce using rule 8 (Simple -> Decision .)
+    WHILE           reduce using rule 8 (Simple -> Decision .)
+    READ            reduce using rule 8 (Simple -> Decision .)
+    PRINT           reduce using rule 8 (Simple -> Decision .)
+    BREAK           reduce using rule 8 (Simple -> Decision .)
+    CONTINUE        reduce using rule 8 (Simple -> Decision .)
+    ELSE            reduce using rule 8 (Simple -> Decision .)
+
+
+state 13
+
+    (9) Simple -> Loop .
+
+    CLOSEBLK        reduce using rule 9 (Simple -> Loop .)
+    OPENBLK         reduce using rule 9 (Simple -> Loop .)
+    IDENT           reduce using rule 9 (Simple -> Loop .)
+    IF              reduce using rule 9 (Simple -> Loop .)
+    WHILE           reduce using rule 9 (Simple -> Loop .)
+    READ            reduce using rule 9 (Simple -> Loop .)
+    PRINT           reduce using rule 9 (Simple -> Loop .)
+    BREAK           reduce using rule 9 (Simple -> Loop .)
+    CONTINUE        reduce using rule 9 (Simple -> Loop .)
+    ELSE            reduce using rule 9 (Simple -> Loop .)
+
+
+state 14
+
+    (10) Simple -> Input .
+
+    CLOSEBLK        reduce using rule 10 (Simple -> Input .)
+    OPENBLK         reduce using rule 10 (Simple -> Input .)
+    IDENT           reduce using rule 10 (Simple -> Input .)
+    IF              reduce using rule 10 (Simple -> Input .)
+    WHILE           reduce using rule 10 (Simple -> Input .)
+    READ            reduce using rule 10 (Simple -> Input .)
+    PRINT           reduce using rule 10 (Simple -> Input .)
+    BREAK           reduce using rule 10 (Simple -> Input .)
+    CONTINUE        reduce using rule 10 (Simple -> Input .)
+    ELSE            reduce using rule 10 (Simple -> Input .)
+
+
+state 15
+
+    (11) Simple -> Output .
+
+    CLOSEBLK        reduce using rule 11 (Simple -> Output .)
+    OPENBLK         reduce using rule 11 (Simple -> Output .)
+    IDENT           reduce using rule 11 (Simple -> Output .)
+    IF              reduce using rule 11 (Simple -> Output .)
+    WHILE           reduce using rule 11 (Simple -> Output .)
+    READ            reduce using rule 11 (Simple -> Output .)
+    PRINT           reduce using rule 11 (Simple -> Output .)
+    BREAK           reduce using rule 11 (Simple -> Output .)
+    CONTINUE        reduce using rule 11 (Simple -> Output .)
+    ELSE            reduce using rule 11 (Simple -> Output .)
+
+
+state 16
+
+    (12) Simple -> Specials .
+
+    CLOSEBLK        reduce using rule 12 (Simple -> Specials .)
+    OPENBLK         reduce using rule 12 (Simple -> Specials .)
+    IDENT           reduce using rule 12 (Simple -> Specials .)
+    IF              reduce using rule 12 (Simple -> Specials .)
+    WHILE           reduce using rule 12 (Simple -> Specials .)
+    READ            reduce using rule 12 (Simple -> Specials .)
+    PRINT           reduce using rule 12 (Simple -> Specials .)
+    BREAK           reduce using rule 12 (Simple -> Specials .)
+    CONTINUE        reduce using rule 12 (Simple -> Specials .)
+    ELSE            reduce using rule 12 (Simple -> Specials .)
+
+
+state 17
+
+    (13) Atrib -> IDENT . ATRIB Exp PTOVIR
+
+    ATRIB           shift and go to state 26
+
+
+state 18
+
+    (14) Decision -> IF . OPENPAR Test CLOSEPAR Com ELSE Com
+    (15) Decision -> IF . OPENPAR Test CLOSEPAR Com
+
+    OPENPAR         shift and go to state 27
+
+
+state 19
+
+    (16) Loop -> WHILE . OPENPAR Test CLOSEPAR Com
+
+    OPENPAR         shift and go to state 28
+
+
+state 20
+
+    (18) Input -> READ . OPENPAR IDENT CLOSEPAR PTOVIR
+
+    OPENPAR         shift and go to state 29
+
+
+state 21
+
+    (17) Output -> PRINT . OPENPAR IDENT CLOSEPAR PTOVIR
+
+    OPENPAR         shift and go to state 30
+
+
+state 22
+
+    (19) Specials -> BREAK . PTOVIR
+
+    PTOVIR          shift and go to state 31
+
+
+state 23
+
+    (20) Specials -> CONTINUE . PTOVIR
+
+    PTOVIR          shift and go to state 32
+
+
+state 24
+
+    (2) Block -> OPENBLK SeqCom CLOSEBLK .
+
+    $end            reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    CLOSEBLK        reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    OPENBLK         reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    IDENT           reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    IF              reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    WHILE           reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    READ            reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    PRINT           reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    BREAK           reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    CONTINUE        reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+    ELSE            reduce using rule 2 (Block -> OPENBLK SeqCom CLOSEBLK .)
+
+
+state 25
+
+    (3) SeqCom -> SeqCom Com .
+
+    CLOSEBLK        reduce using rule 3 (SeqCom -> SeqCom Com .)
+    OPENBLK         reduce using rule 3 (SeqCom -> SeqCom Com .)
+    IDENT           reduce using rule 3 (SeqCom -> SeqCom Com .)
+    IF              reduce using rule 3 (SeqCom -> SeqCom Com .)
+    WHILE           reduce using rule 3 (SeqCom -> SeqCom Com .)
+    READ            reduce using rule 3 (SeqCom -> SeqCom Com .)
+    PRINT           reduce using rule 3 (SeqCom -> SeqCom Com .)
+    BREAK           reduce using rule 3 (SeqCom -> SeqCom Com .)
+    CONTINUE        reduce using rule 3 (SeqCom -> SeqCom Com .)
+
+
+state 26
+
+    (13) Atrib -> IDENT ATRIB . Exp PTOVIR
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 34
+
+state 27
+
+    (14) Decision -> IF OPENPAR . Test CLOSEPAR Com ELSE Com
+    (15) Decision -> IF OPENPAR . Test CLOSEPAR Com
+    (21) Test -> . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Test                           shift and go to state 40
+    Exp                            shift and go to state 41
+
+state 28
+
+    (16) Loop -> WHILE OPENPAR . Test CLOSEPAR Com
+    (21) Test -> . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Test                           shift and go to state 42
+    Exp                            shift and go to state 41
+
+state 29
+
+    (18) Input -> READ OPENPAR . IDENT CLOSEPAR PTOVIR
+
+    IDENT           shift and go to state 43
+
+
+state 30
+
+    (17) Output -> PRINT OPENPAR . IDENT CLOSEPAR PTOVIR
+
+    IDENT           shift and go to state 44
+
+
+state 31
+
+    (19) Specials -> BREAK PTOVIR .
+
+    CLOSEBLK        reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    OPENBLK         reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    IDENT           reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    IF              reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    WHILE           reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    READ            reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    PRINT           reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    BREAK           reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    CONTINUE        reduce using rule 19 (Specials -> BREAK PTOVIR .)
+    ELSE            reduce using rule 19 (Specials -> BREAK PTOVIR .)
+
+
+state 32
+
+    (20) Specials -> CONTINUE PTOVIR .
+
+    CLOSEBLK        reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    OPENBLK         reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    IDENT           reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    IF              reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    WHILE           reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    READ            reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    PRINT           reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    BREAK           reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    CONTINUE        reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+    ELSE            reduce using rule 20 (Specials -> CONTINUE PTOVIR .)
+
+
+state 33
+
+    (39) Exp -> IDENT .
+
+    PTOVIR          reduce using rule 39 (Exp -> IDENT .)
+    AND             reduce using rule 39 (Exp -> IDENT .)
+    OR              reduce using rule 39 (Exp -> IDENT .)
+    EQUAL           reduce using rule 39 (Exp -> IDENT .)
+    DIF             reduce using rule 39 (Exp -> IDENT .)
+    GT              reduce using rule 39 (Exp -> IDENT .)
+    GTE             reduce using rule 39 (Exp -> IDENT .)
+    LT              reduce using rule 39 (Exp -> IDENT .)
+    LTE             reduce using rule 39 (Exp -> IDENT .)
+    DIV             reduce using rule 39 (Exp -> IDENT .)
+    MOD             reduce using rule 39 (Exp -> IDENT .)
+    TIMES           reduce using rule 39 (Exp -> IDENT .)
+    PLUS            reduce using rule 39 (Exp -> IDENT .)
+    MINUS           reduce using rule 39 (Exp -> IDENT .)
+    CLOSEPAR        reduce using rule 39 (Exp -> IDENT .)
+
+
+state 34
+
+    (13) Atrib -> IDENT ATRIB Exp . PTOVIR
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          shift and go to state 45
+    AND             shift and go to state 46
+    OR              shift and go to state 47
+    EQUAL           shift and go to state 48
+    DIF             shift and go to state 49
+    GT              shift and go to state 50
+    GTE             shift and go to state 51
+    LT              shift and go to state 52
+    LTE             shift and go to state 53
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+
+state 35
+
+    (24) Exp -> NOT . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 59
+
+state 36
+
+    (37) Exp -> PLUS . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 60
+
+state 37
+
+    (36) Exp -> MINUS . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 61
+
+state 38
+
+    (38) Exp -> OPENPAR . Exp CLOSEPAR
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 62
+
+state 39
+
+    (40) Exp -> NUMBER .
+
+    PTOVIR          reduce using rule 40 (Exp -> NUMBER .)
+    AND             reduce using rule 40 (Exp -> NUMBER .)
+    OR              reduce using rule 40 (Exp -> NUMBER .)
+    EQUAL           reduce using rule 40 (Exp -> NUMBER .)
+    DIF             reduce using rule 40 (Exp -> NUMBER .)
+    GT              reduce using rule 40 (Exp -> NUMBER .)
+    GTE             reduce using rule 40 (Exp -> NUMBER .)
+    LT              reduce using rule 40 (Exp -> NUMBER .)
+    LTE             reduce using rule 40 (Exp -> NUMBER .)
+    DIV             reduce using rule 40 (Exp -> NUMBER .)
+    MOD             reduce using rule 40 (Exp -> NUMBER .)
+    TIMES           reduce using rule 40 (Exp -> NUMBER .)
+    PLUS            reduce using rule 40 (Exp -> NUMBER .)
+    MINUS           reduce using rule 40 (Exp -> NUMBER .)
+    CLOSEPAR        reduce using rule 40 (Exp -> NUMBER .)
+
+
+state 40
+
+    (14) Decision -> IF OPENPAR Test . CLOSEPAR Com ELSE Com
+    (15) Decision -> IF OPENPAR Test . CLOSEPAR Com
+
+    CLOSEPAR        shift and go to state 63
+
+
+state 41
+
+    (21) Test -> Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    CLOSEPAR        reduce using rule 21 (Test -> Exp .)
+    AND             shift and go to state 46
+    OR              shift and go to state 47
+    EQUAL           shift and go to state 48
+    DIF             shift and go to state 49
+    GT              shift and go to state 50
+    GTE             shift and go to state 51
+    LT              shift and go to state 52
+    LTE             shift and go to state 53
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+
+state 42
+
+    (16) Loop -> WHILE OPENPAR Test . CLOSEPAR Com
+
+    CLOSEPAR        shift and go to state 64
+
+
+state 43
+
+    (18) Input -> READ OPENPAR IDENT . CLOSEPAR PTOVIR
+
+    CLOSEPAR        shift and go to state 65
+
+
+state 44
+
+    (17) Output -> PRINT OPENPAR IDENT . CLOSEPAR PTOVIR
+
+    CLOSEPAR        shift and go to state 66
+
+
+state 45
+
+    (13) Atrib -> IDENT ATRIB Exp PTOVIR .
+
+    CLOSEBLK        reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    OPENBLK         reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    IDENT           reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    IF              reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    WHILE           reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    READ            reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    PRINT           reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    BREAK           reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    CONTINUE        reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+    ELSE            reduce using rule 13 (Atrib -> IDENT ATRIB Exp PTOVIR .)
+
+
+state 46
+
+    (22) Exp -> Exp AND . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 67
+
+state 47
+
+    (23) Exp -> Exp OR . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 68
+
+state 48
+
+    (25) Exp -> Exp EQUAL . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 69
+
+state 49
+
+    (26) Exp -> Exp DIF . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 70
+
+state 50
+
+    (27) Exp -> Exp GT . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 71
+
+state 51
+
+    (28) Exp -> Exp GTE . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 72
+
+state 52
+
+    (29) Exp -> Exp LT . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 73
+
+state 53
+
+    (30) Exp -> Exp LTE . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 74
+
+state 54
+
+    (31) Exp -> Exp DIV . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 75
+
+state 55
+
+    (32) Exp -> Exp MOD . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 76
+
+state 56
+
+    (33) Exp -> Exp TIMES . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 77
+
+state 57
+
+    (34) Exp -> Exp PLUS . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 78
+
+state 58
+
+    (35) Exp -> Exp MINUS . Exp
+    (22) Exp -> . Exp AND Exp
+    (23) Exp -> . Exp OR Exp
+    (24) Exp -> . NOT Exp
+    (25) Exp -> . Exp EQUAL Exp
+    (26) Exp -> . Exp DIF Exp
+    (27) Exp -> . Exp GT Exp
+    (28) Exp -> . Exp GTE Exp
+    (29) Exp -> . Exp LT Exp
+    (30) Exp -> . Exp LTE Exp
+    (31) Exp -> . Exp DIV Exp
+    (32) Exp -> . Exp MOD Exp
+    (33) Exp -> . Exp TIMES Exp
+    (34) Exp -> . Exp PLUS Exp
+    (35) Exp -> . Exp MINUS Exp
+    (36) Exp -> . MINUS Exp
+    (37) Exp -> . PLUS Exp
+    (38) Exp -> . OPENPAR Exp CLOSEPAR
+    (39) Exp -> . IDENT
+    (40) Exp -> . NUMBER
+
+    NOT             shift and go to state 35
+    MINUS           shift and go to state 37
+    PLUS            shift and go to state 36
+    OPENPAR         shift and go to state 38
+    IDENT           shift and go to state 33
+    NUMBER          shift and go to state 39
+
+    Exp                            shift and go to state 79
+
+state 59
+
+    (24) Exp -> NOT Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 24 (Exp -> NOT Exp .)
+    CLOSEPAR        reduce using rule 24 (Exp -> NOT Exp .)
+    AND             shift and go to state 46
+    OR              shift and go to state 47
+    EQUAL           shift and go to state 48
+    DIF             shift and go to state 49
+    GT              shift and go to state 50
+    GTE             shift and go to state 51
+    LT              shift and go to state 52
+    LTE             shift and go to state 53
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! AND             [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! OR              [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! EQUAL           [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! DIF             [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! GT              [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! GTE             [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! LT              [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! LTE             [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! DIV             [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! MOD             [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! TIMES           [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! PLUS            [ reduce using rule 24 (Exp -> NOT Exp .) ]
+  ! MINUS           [ reduce using rule 24 (Exp -> NOT Exp .) ]
+
+
+state 60
+
+    (37) Exp -> PLUS Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 37 (Exp -> PLUS Exp .)
+    AND             reduce using rule 37 (Exp -> PLUS Exp .)
+    OR              reduce using rule 37 (Exp -> PLUS Exp .)
+    EQUAL           reduce using rule 37 (Exp -> PLUS Exp .)
+    DIF             reduce using rule 37 (Exp -> PLUS Exp .)
+    GT              reduce using rule 37 (Exp -> PLUS Exp .)
+    GTE             reduce using rule 37 (Exp -> PLUS Exp .)
+    LT              reduce using rule 37 (Exp -> PLUS Exp .)
+    LTE             reduce using rule 37 (Exp -> PLUS Exp .)
+    DIV             reduce using rule 37 (Exp -> PLUS Exp .)
+    MOD             reduce using rule 37 (Exp -> PLUS Exp .)
+    TIMES           reduce using rule 37 (Exp -> PLUS Exp .)
+    PLUS            reduce using rule 37 (Exp -> PLUS Exp .)
+    MINUS           reduce using rule 37 (Exp -> PLUS Exp .)
+    CLOSEPAR        reduce using rule 37 (Exp -> PLUS Exp .)
+
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! DIV             [ shift and go to state 54 ]
+  ! MOD             [ shift and go to state 55 ]
+  ! TIMES           [ shift and go to state 56 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 61
+
+    (36) Exp -> MINUS Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 36 (Exp -> MINUS Exp .)
+    AND             reduce using rule 36 (Exp -> MINUS Exp .)
+    OR              reduce using rule 36 (Exp -> MINUS Exp .)
+    EQUAL           reduce using rule 36 (Exp -> MINUS Exp .)
+    DIF             reduce using rule 36 (Exp -> MINUS Exp .)
+    GT              reduce using rule 36 (Exp -> MINUS Exp .)
+    GTE             reduce using rule 36 (Exp -> MINUS Exp .)
+    LT              reduce using rule 36 (Exp -> MINUS Exp .)
+    LTE             reduce using rule 36 (Exp -> MINUS Exp .)
+    DIV             reduce using rule 36 (Exp -> MINUS Exp .)
+    MOD             reduce using rule 36 (Exp -> MINUS Exp .)
+    TIMES           reduce using rule 36 (Exp -> MINUS Exp .)
+    PLUS            reduce using rule 36 (Exp -> MINUS Exp .)
+    MINUS           reduce using rule 36 (Exp -> MINUS Exp .)
+    CLOSEPAR        reduce using rule 36 (Exp -> MINUS Exp .)
+
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! DIV             [ shift and go to state 54 ]
+  ! MOD             [ shift and go to state 55 ]
+  ! TIMES           [ shift and go to state 56 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 62
+
+    (38) Exp -> OPENPAR Exp . CLOSEPAR
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    CLOSEPAR        shift and go to state 80
+    AND             shift and go to state 46
+    OR              shift and go to state 47
+    EQUAL           shift and go to state 48
+    DIF             shift and go to state 49
+    GT              shift and go to state 50
+    GTE             shift and go to state 51
+    LT              shift and go to state 52
+    LTE             shift and go to state 53
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+
+state 63
+
+    (14) Decision -> IF OPENPAR Test CLOSEPAR . Com ELSE Com
+    (15) Decision -> IF OPENPAR Test CLOSEPAR . Com
+    (5) Com -> . Simple
+    (6) Com -> . Block
+    (7) Simple -> . Atrib
+    (8) Simple -> . Decision
+    (9) Simple -> . Loop
+    (10) Simple -> . Input
+    (11) Simple -> . Output
+    (12) Simple -> . Specials
+    (2) Block -> . OPENBLK SeqCom CLOSEBLK
+    (13) Atrib -> . IDENT ATRIB Exp PTOVIR
+    (14) Decision -> . IF OPENPAR Test CLOSEPAR Com ELSE Com
+    (15) Decision -> . IF OPENPAR Test CLOSEPAR Com
+    (16) Loop -> . WHILE OPENPAR Test CLOSEPAR Com
+    (18) Input -> . READ OPENPAR IDENT CLOSEPAR PTOVIR
+    (17) Output -> . PRINT OPENPAR IDENT CLOSEPAR PTOVIR
+    (19) Specials -> . BREAK PTOVIR
+    (20) Specials -> . CONTINUE PTOVIR
+
+    OPENBLK         shift and go to state 6
+    IDENT           shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    READ            shift and go to state 20
+    PRINT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONTINUE        shift and go to state 23
+
+    Com                            shift and go to state 81
+    Simple                         shift and go to state 9
+    Block                          shift and go to state 10
+    Atrib                          shift and go to state 11
+    Decision                       shift and go to state 12
+    Loop                           shift and go to state 13
+    Input                          shift and go to state 14
+    Output                         shift and go to state 15
+    Specials                       shift and go to state 16
+
+state 64
+
+    (16) Loop -> WHILE OPENPAR Test CLOSEPAR . Com
+    (5) Com -> . Simple
+    (6) Com -> . Block
+    (7) Simple -> . Atrib
+    (8) Simple -> . Decision
+    (9) Simple -> . Loop
+    (10) Simple -> . Input
+    (11) Simple -> . Output
+    (12) Simple -> . Specials
+    (2) Block -> . OPENBLK SeqCom CLOSEBLK
+    (13) Atrib -> . IDENT ATRIB Exp PTOVIR
+    (14) Decision -> . IF OPENPAR Test CLOSEPAR Com ELSE Com
+    (15) Decision -> . IF OPENPAR Test CLOSEPAR Com
+    (16) Loop -> . WHILE OPENPAR Test CLOSEPAR Com
+    (18) Input -> . READ OPENPAR IDENT CLOSEPAR PTOVIR
+    (17) Output -> . PRINT OPENPAR IDENT CLOSEPAR PTOVIR
+    (19) Specials -> . BREAK PTOVIR
+    (20) Specials -> . CONTINUE PTOVIR
+
+    OPENBLK         shift and go to state 6
+    IDENT           shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    READ            shift and go to state 20
+    PRINT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONTINUE        shift and go to state 23
+
+    Com                            shift and go to state 82
+    Simple                         shift and go to state 9
+    Block                          shift and go to state 10
+    Atrib                          shift and go to state 11
+    Decision                       shift and go to state 12
+    Loop                           shift and go to state 13
+    Input                          shift and go to state 14
+    Output                         shift and go to state 15
+    Specials                       shift and go to state 16
+
+state 65
+
+    (18) Input -> READ OPENPAR IDENT CLOSEPAR . PTOVIR
+
+    PTOVIR          shift and go to state 83
+
+
+state 66
+
+    (17) Output -> PRINT OPENPAR IDENT CLOSEPAR . PTOVIR
+
+    PTOVIR          shift and go to state 84
+
+
+state 67
+
+    (22) Exp -> Exp AND Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 22 (Exp -> Exp AND Exp .)
+    AND             reduce using rule 22 (Exp -> Exp AND Exp .)
+    OR              reduce using rule 22 (Exp -> Exp AND Exp .)
+    CLOSEPAR        reduce using rule 22 (Exp -> Exp AND Exp .)
+    EQUAL           shift and go to state 48
+    DIF             shift and go to state 49
+    GT              shift and go to state 50
+    GTE             shift and go to state 51
+    LT              shift and go to state 52
+    LTE             shift and go to state 53
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! EQUAL           [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! DIF             [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! GT              [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! GTE             [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! LT              [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! LTE             [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! DIV             [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! MOD             [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! TIMES           [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! PLUS            [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! MINUS           [ reduce using rule 22 (Exp -> Exp AND Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+
+
+state 68
+
+    (23) Exp -> Exp OR Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 23 (Exp -> Exp OR Exp .)
+    AND             reduce using rule 23 (Exp -> Exp OR Exp .)
+    OR              reduce using rule 23 (Exp -> Exp OR Exp .)
+    CLOSEPAR        reduce using rule 23 (Exp -> Exp OR Exp .)
+    EQUAL           shift and go to state 48
+    DIF             shift and go to state 49
+    GT              shift and go to state 50
+    GTE             shift and go to state 51
+    LT              shift and go to state 52
+    LTE             shift and go to state 53
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! EQUAL           [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! DIF             [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! GT              [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! GTE             [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! LT              [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! LTE             [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! DIV             [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! MOD             [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! TIMES           [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! PLUS            [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! MINUS           [ reduce using rule 23 (Exp -> Exp OR Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+
+
+state 69
+
+    (25) Exp -> Exp EQUAL Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    AND             reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    OR              reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    EQUAL           reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    DIF             reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    GT              reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    GTE             reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    LT              reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    LTE             reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    CLOSEPAR        reduce using rule 25 (Exp -> Exp EQUAL Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! DIV             [ reduce using rule 25 (Exp -> Exp EQUAL Exp .) ]
+  ! MOD             [ reduce using rule 25 (Exp -> Exp EQUAL Exp .) ]
+  ! TIMES           [ reduce using rule 25 (Exp -> Exp EQUAL Exp .) ]
+  ! PLUS            [ reduce using rule 25 (Exp -> Exp EQUAL Exp .) ]
+  ! MINUS           [ reduce using rule 25 (Exp -> Exp EQUAL Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+
+
+state 70
+
+    (26) Exp -> Exp DIF Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 26 (Exp -> Exp DIF Exp .)
+    AND             reduce using rule 26 (Exp -> Exp DIF Exp .)
+    OR              reduce using rule 26 (Exp -> Exp DIF Exp .)
+    EQUAL           reduce using rule 26 (Exp -> Exp DIF Exp .)
+    DIF             reduce using rule 26 (Exp -> Exp DIF Exp .)
+    GT              reduce using rule 26 (Exp -> Exp DIF Exp .)
+    GTE             reduce using rule 26 (Exp -> Exp DIF Exp .)
+    LT              reduce using rule 26 (Exp -> Exp DIF Exp .)
+    LTE             reduce using rule 26 (Exp -> Exp DIF Exp .)
+    CLOSEPAR        reduce using rule 26 (Exp -> Exp DIF Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! DIV             [ reduce using rule 26 (Exp -> Exp DIF Exp .) ]
+  ! MOD             [ reduce using rule 26 (Exp -> Exp DIF Exp .) ]
+  ! TIMES           [ reduce using rule 26 (Exp -> Exp DIF Exp .) ]
+  ! PLUS            [ reduce using rule 26 (Exp -> Exp DIF Exp .) ]
+  ! MINUS           [ reduce using rule 26 (Exp -> Exp DIF Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+
+
+state 71
+
+    (27) Exp -> Exp GT Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 27 (Exp -> Exp GT Exp .)
+    AND             reduce using rule 27 (Exp -> Exp GT Exp .)
+    OR              reduce using rule 27 (Exp -> Exp GT Exp .)
+    EQUAL           reduce using rule 27 (Exp -> Exp GT Exp .)
+    DIF             reduce using rule 27 (Exp -> Exp GT Exp .)
+    GT              reduce using rule 27 (Exp -> Exp GT Exp .)
+    GTE             reduce using rule 27 (Exp -> Exp GT Exp .)
+    LT              reduce using rule 27 (Exp -> Exp GT Exp .)
+    LTE             reduce using rule 27 (Exp -> Exp GT Exp .)
+    CLOSEPAR        reduce using rule 27 (Exp -> Exp GT Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! DIV             [ reduce using rule 27 (Exp -> Exp GT Exp .) ]
+  ! MOD             [ reduce using rule 27 (Exp -> Exp GT Exp .) ]
+  ! TIMES           [ reduce using rule 27 (Exp -> Exp GT Exp .) ]
+  ! PLUS            [ reduce using rule 27 (Exp -> Exp GT Exp .) ]
+  ! MINUS           [ reduce using rule 27 (Exp -> Exp GT Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+
+
+state 72
+
+    (28) Exp -> Exp GTE Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 28 (Exp -> Exp GTE Exp .)
+    AND             reduce using rule 28 (Exp -> Exp GTE Exp .)
+    OR              reduce using rule 28 (Exp -> Exp GTE Exp .)
+    EQUAL           reduce using rule 28 (Exp -> Exp GTE Exp .)
+    DIF             reduce using rule 28 (Exp -> Exp GTE Exp .)
+    GT              reduce using rule 28 (Exp -> Exp GTE Exp .)
+    GTE             reduce using rule 28 (Exp -> Exp GTE Exp .)
+    LT              reduce using rule 28 (Exp -> Exp GTE Exp .)
+    LTE             reduce using rule 28 (Exp -> Exp GTE Exp .)
+    CLOSEPAR        reduce using rule 28 (Exp -> Exp GTE Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! DIV             [ reduce using rule 28 (Exp -> Exp GTE Exp .) ]
+  ! MOD             [ reduce using rule 28 (Exp -> Exp GTE Exp .) ]
+  ! TIMES           [ reduce using rule 28 (Exp -> Exp GTE Exp .) ]
+  ! PLUS            [ reduce using rule 28 (Exp -> Exp GTE Exp .) ]
+  ! MINUS           [ reduce using rule 28 (Exp -> Exp GTE Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+
+
+state 73
+
+    (29) Exp -> Exp LT Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 29 (Exp -> Exp LT Exp .)
+    AND             reduce using rule 29 (Exp -> Exp LT Exp .)
+    OR              reduce using rule 29 (Exp -> Exp LT Exp .)
+    EQUAL           reduce using rule 29 (Exp -> Exp LT Exp .)
+    DIF             reduce using rule 29 (Exp -> Exp LT Exp .)
+    GT              reduce using rule 29 (Exp -> Exp LT Exp .)
+    GTE             reduce using rule 29 (Exp -> Exp LT Exp .)
+    LT              reduce using rule 29 (Exp -> Exp LT Exp .)
+    LTE             reduce using rule 29 (Exp -> Exp LT Exp .)
+    CLOSEPAR        reduce using rule 29 (Exp -> Exp LT Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! DIV             [ reduce using rule 29 (Exp -> Exp LT Exp .) ]
+  ! MOD             [ reduce using rule 29 (Exp -> Exp LT Exp .) ]
+  ! TIMES           [ reduce using rule 29 (Exp -> Exp LT Exp .) ]
+  ! PLUS            [ reduce using rule 29 (Exp -> Exp LT Exp .) ]
+  ! MINUS           [ reduce using rule 29 (Exp -> Exp LT Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+
+
+state 74
+
+    (30) Exp -> Exp LTE Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 30 (Exp -> Exp LTE Exp .)
+    AND             reduce using rule 30 (Exp -> Exp LTE Exp .)
+    OR              reduce using rule 30 (Exp -> Exp LTE Exp .)
+    EQUAL           reduce using rule 30 (Exp -> Exp LTE Exp .)
+    DIF             reduce using rule 30 (Exp -> Exp LTE Exp .)
+    GT              reduce using rule 30 (Exp -> Exp LTE Exp .)
+    GTE             reduce using rule 30 (Exp -> Exp LTE Exp .)
+    LT              reduce using rule 30 (Exp -> Exp LTE Exp .)
+    LTE             reduce using rule 30 (Exp -> Exp LTE Exp .)
+    CLOSEPAR        reduce using rule 30 (Exp -> Exp LTE Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+    PLUS            shift and go to state 57
+    MINUS           shift and go to state 58
+
+  ! DIV             [ reduce using rule 30 (Exp -> Exp LTE Exp .) ]
+  ! MOD             [ reduce using rule 30 (Exp -> Exp LTE Exp .) ]
+  ! TIMES           [ reduce using rule 30 (Exp -> Exp LTE Exp .) ]
+  ! PLUS            [ reduce using rule 30 (Exp -> Exp LTE Exp .) ]
+  ! MINUS           [ reduce using rule 30 (Exp -> Exp LTE Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+
+
+state 75
+
+    (31) Exp -> Exp DIV Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 31 (Exp -> Exp DIV Exp .)
+    AND             reduce using rule 31 (Exp -> Exp DIV Exp .)
+    OR              reduce using rule 31 (Exp -> Exp DIV Exp .)
+    EQUAL           reduce using rule 31 (Exp -> Exp DIV Exp .)
+    DIF             reduce using rule 31 (Exp -> Exp DIV Exp .)
+    GT              reduce using rule 31 (Exp -> Exp DIV Exp .)
+    GTE             reduce using rule 31 (Exp -> Exp DIV Exp .)
+    LT              reduce using rule 31 (Exp -> Exp DIV Exp .)
+    LTE             reduce using rule 31 (Exp -> Exp DIV Exp .)
+    DIV             reduce using rule 31 (Exp -> Exp DIV Exp .)
+    MOD             reduce using rule 31 (Exp -> Exp DIV Exp .)
+    TIMES           reduce using rule 31 (Exp -> Exp DIV Exp .)
+    PLUS            reduce using rule 31 (Exp -> Exp DIV Exp .)
+    MINUS           reduce using rule 31 (Exp -> Exp DIV Exp .)
+    CLOSEPAR        reduce using rule 31 (Exp -> Exp DIV Exp .)
+
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! DIV             [ shift and go to state 54 ]
+  ! MOD             [ shift and go to state 55 ]
+  ! TIMES           [ shift and go to state 56 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 76
+
+    (32) Exp -> Exp MOD Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 32 (Exp -> Exp MOD Exp .)
+    AND             reduce using rule 32 (Exp -> Exp MOD Exp .)
+    OR              reduce using rule 32 (Exp -> Exp MOD Exp .)
+    EQUAL           reduce using rule 32 (Exp -> Exp MOD Exp .)
+    DIF             reduce using rule 32 (Exp -> Exp MOD Exp .)
+    GT              reduce using rule 32 (Exp -> Exp MOD Exp .)
+    GTE             reduce using rule 32 (Exp -> Exp MOD Exp .)
+    LT              reduce using rule 32 (Exp -> Exp MOD Exp .)
+    LTE             reduce using rule 32 (Exp -> Exp MOD Exp .)
+    DIV             reduce using rule 32 (Exp -> Exp MOD Exp .)
+    MOD             reduce using rule 32 (Exp -> Exp MOD Exp .)
+    TIMES           reduce using rule 32 (Exp -> Exp MOD Exp .)
+    PLUS            reduce using rule 32 (Exp -> Exp MOD Exp .)
+    MINUS           reduce using rule 32 (Exp -> Exp MOD Exp .)
+    CLOSEPAR        reduce using rule 32 (Exp -> Exp MOD Exp .)
+
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! DIV             [ shift and go to state 54 ]
+  ! MOD             [ shift and go to state 55 ]
+  ! TIMES           [ shift and go to state 56 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 77
+
+    (33) Exp -> Exp TIMES Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    AND             reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    OR              reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    EQUAL           reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    DIF             reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    GT              reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    GTE             reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    LT              reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    LTE             reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    DIV             reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    MOD             reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    TIMES           reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    PLUS            reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    MINUS           reduce using rule 33 (Exp -> Exp TIMES Exp .)
+    CLOSEPAR        reduce using rule 33 (Exp -> Exp TIMES Exp .)
+
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! DIV             [ shift and go to state 54 ]
+  ! MOD             [ shift and go to state 55 ]
+  ! TIMES           [ shift and go to state 56 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 78
+
+    (34) Exp -> Exp PLUS Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    AND             reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    OR              reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    EQUAL           reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    DIF             reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    GT              reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    GTE             reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    LT              reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    LTE             reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    PLUS            reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    MINUS           reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    CLOSEPAR        reduce using rule 34 (Exp -> Exp PLUS Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+
+  ! DIV             [ reduce using rule 34 (Exp -> Exp PLUS Exp .) ]
+  ! MOD             [ reduce using rule 34 (Exp -> Exp PLUS Exp .) ]
+  ! TIMES           [ reduce using rule 34 (Exp -> Exp PLUS Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 79
+
+    (35) Exp -> Exp MINUS Exp .
+    (22) Exp -> Exp . AND Exp
+    (23) Exp -> Exp . OR Exp
+    (25) Exp -> Exp . EQUAL Exp
+    (26) Exp -> Exp . DIF Exp
+    (27) Exp -> Exp . GT Exp
+    (28) Exp -> Exp . GTE Exp
+    (29) Exp -> Exp . LT Exp
+    (30) Exp -> Exp . LTE Exp
+    (31) Exp -> Exp . DIV Exp
+    (32) Exp -> Exp . MOD Exp
+    (33) Exp -> Exp . TIMES Exp
+    (34) Exp -> Exp . PLUS Exp
+    (35) Exp -> Exp . MINUS Exp
+
+    PTOVIR          reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    AND             reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    OR              reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    EQUAL           reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    DIF             reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    GT              reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    GTE             reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    LT              reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    LTE             reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    PLUS            reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    MINUS           reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    CLOSEPAR        reduce using rule 35 (Exp -> Exp MINUS Exp .)
+    DIV             shift and go to state 54
+    MOD             shift and go to state 55
+    TIMES           shift and go to state 56
+
+  ! DIV             [ reduce using rule 35 (Exp -> Exp MINUS Exp .) ]
+  ! MOD             [ reduce using rule 35 (Exp -> Exp MINUS Exp .) ]
+  ! TIMES           [ reduce using rule 35 (Exp -> Exp MINUS Exp .) ]
+  ! AND             [ shift and go to state 46 ]
+  ! OR              [ shift and go to state 47 ]
+  ! EQUAL           [ shift and go to state 48 ]
+  ! DIF             [ shift and go to state 49 ]
+  ! GT              [ shift and go to state 50 ]
+  ! GTE             [ shift and go to state 51 ]
+  ! LT              [ shift and go to state 52 ]
+  ! LTE             [ shift and go to state 53 ]
+  ! PLUS            [ shift and go to state 57 ]
+  ! MINUS           [ shift and go to state 58 ]
+
+
+state 80
+
+    (38) Exp -> OPENPAR Exp CLOSEPAR .
+
+    PTOVIR          reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    AND             reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    OR              reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    EQUAL           reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    DIF             reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    GT              reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    GTE             reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    LT              reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    LTE             reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    DIV             reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    MOD             reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    TIMES           reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    PLUS            reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    MINUS           reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+    CLOSEPAR        reduce using rule 38 (Exp -> OPENPAR Exp CLOSEPAR .)
+
+
+state 81
+
+    (14) Decision -> IF OPENPAR Test CLOSEPAR Com . ELSE Com
+    (15) Decision -> IF OPENPAR Test CLOSEPAR Com .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 85
+    CLOSEBLK        reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    OPENBLK         reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    IDENT           reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    IF              reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    WHILE           reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    READ            reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    PRINT           reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    BREAK           reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+    CONTINUE        reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .)
+
+  ! ELSE            [ reduce using rule 15 (Decision -> IF OPENPAR Test CLOSEPAR Com .) ]
+
+
+state 82
+
+    (16) Loop -> WHILE OPENPAR Test CLOSEPAR Com .
+
+    CLOSEBLK        reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    OPENBLK         reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    IDENT           reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    IF              reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    WHILE           reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    READ            reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    PRINT           reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    BREAK           reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    CONTINUE        reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+    ELSE            reduce using rule 16 (Loop -> WHILE OPENPAR Test CLOSEPAR Com .)
+
+
+state 83
+
+    (18) Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .
+
+    CLOSEBLK        reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    OPENBLK         reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    IDENT           reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    IF              reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    WHILE           reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    READ            reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    PRINT           reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    BREAK           reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    CONTINUE        reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+    ELSE            reduce using rule 18 (Input -> READ OPENPAR IDENT CLOSEPAR PTOVIR .)
+
+
+state 84
+
+    (17) Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .
+
+    CLOSEBLK        reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    OPENBLK         reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    IDENT           reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    IF              reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    WHILE           reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    READ            reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    PRINT           reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    BREAK           reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    CONTINUE        reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+    ELSE            reduce using rule 17 (Output -> PRINT OPENPAR IDENT CLOSEPAR PTOVIR .)
+
+
+state 85
+
+    (14) Decision -> IF OPENPAR Test CLOSEPAR Com ELSE . Com
+    (5) Com -> . Simple
+    (6) Com -> . Block
+    (7) Simple -> . Atrib
+    (8) Simple -> . Decision
+    (9) Simple -> . Loop
+    (10) Simple -> . Input
+    (11) Simple -> . Output
+    (12) Simple -> . Specials
+    (2) Block -> . OPENBLK SeqCom CLOSEBLK
+    (13) Atrib -> . IDENT ATRIB Exp PTOVIR
+    (14) Decision -> . IF OPENPAR Test CLOSEPAR Com ELSE Com
+    (15) Decision -> . IF OPENPAR Test CLOSEPAR Com
+    (16) Loop -> . WHILE OPENPAR Test CLOSEPAR Com
+    (18) Input -> . READ OPENPAR IDENT CLOSEPAR PTOVIR
+    (17) Output -> . PRINT OPENPAR IDENT CLOSEPAR PTOVIR
+    (19) Specials -> . BREAK PTOVIR
+    (20) Specials -> . CONTINUE PTOVIR
+
+    OPENBLK         shift and go to state 6
+    IDENT           shift and go to state 17
+    IF              shift and go to state 18
+    WHILE           shift and go to state 19
+    READ            shift and go to state 20
+    PRINT           shift and go to state 21
+    BREAK           shift and go to state 22
+    CONTINUE        shift and go to state 23
+
+    Com                            shift and go to state 86
+    Simple                         shift and go to state 9
+    Block                          shift and go to state 10
+    Atrib                          shift and go to state 11
+    Decision                       shift and go to state 12
+    Loop                           shift and go to state 13
+    Input                          shift and go to state 14
+    Output                         shift and go to state 15
+    Specials                       shift and go to state 16
+
+state 86
+
+    (14) Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .
+
+    CLOSEBLK        reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    OPENBLK         reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    IDENT           reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    IF              reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    WHILE           reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    READ            reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    PRINT           reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    BREAK           reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    CONTINUE        reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+    ELSE            reduce using rule 14 (Decision -> IF OPENPAR Test CLOSEPAR Com ELSE Com .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ELSE in state 81 resolved as shift
