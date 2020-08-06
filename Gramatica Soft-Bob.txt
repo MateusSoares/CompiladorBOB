@@ -1,0 +1,141 @@
+Programa
+   : ListaDefinicoes
+
+ListaDefinicoes
+   : ListaDefinicoes Definicao
+   | empty
+
+Definicao
+   : DefinicaoClasse
+   | DefinicaoFuncao
+
+#======== Classe
+
+DefinicaoClasse
+    : "class" IDENT ClasseBaseOpcional "{" ListaMembros "}"
+
+ClasseBaseOpcional
+    : ":" IDENT
+    | empty
+
+ListaMembros
+    : ListaMembros DefinicaoMembro
+    | empty
+
+DefinicaoMembro
+    : ModificadorOpcional ListaVariaveis ";"
+    | ModificadorOpcional IDENT "(" ListaArgsFormaisOpcional ")" ";"
+
+ModificadorOpcional
+    : "static"
+    | empty
+
+ListaVariaveis
+    : ListaVariaveis "," Variavel
+    | Variavel
+
+Variavel
+    : IDENT
+    | IDENT "[" NUMBER "]"
+
+ListaArgsFormaisOpcional
+    : ListaArgsFormais
+    | empty
+
+ListaArgsFormais
+    : ListaArgsFormais "," IDENT
+    | IDENT
+
+#======== Funcao
+
+DefinicaoFuncao
+    : ClasseEnvolucroOpcional IDENT "(" ListaParametrosOpcionais ")" Bloco
+
+ClasseEnvolucroOpcional
+    : IDENT "::"
+    | empty
+
+ListaParametrosOpcionais
+    : ListaArgsFormaisOpcional ListaTemporariosOpcionais
+
+ListaTemporariosOpcionais
+    : ";" ListaArgsFormais
+    | empty
+
+Bloco
+    : "{" ListaComandos "}"
+
+ListaComandos
+    : ListaComandos Comando
+    | empty
+
+Comando
+    : "if" "(" ExpOpc ")" Comando "else" Comando
+    | "if" "(" ExpOpc ")" Comando
+    | "while" "(" ExpOpc ")" Comando
+    | "do" Comando "while" "(" ExpOpc ")" ";"
+    | "for" "(" ExpOpc ";" ExpOpc ";" ExpOpc ")" Comando
+    | "foreach" IDENT "in" IDENT Comando
+    | "break" ";"
+    | "continue" ";"
+    | "return" ExpOpc ";"
+    | ExpOpc ";"
+    | Bloco
+
+ExpOpc
+    : Exp
+    | empty
+
+#======== Expressao
+
+Exp
+    : Exp "," Exp
+    | EsqVal "=" Exp
+    | EsqVal "+=" Exp
+    | EsqVal "-=" Exp
+    | EsqVal "*=" Exp
+    | EsqVal "/=" Exp
+    | Exp "?" Exp ":" Exp
+    | Exp "||" Exp
+    | Exp "&&" Exp
+    | Exp "|" Exp
+    | Exp "&" Exp
+    | Exp "<<" Exp
+    | Exp ">>" Exp
+    | Exp "==" Exp
+    | Exp "!=" Exp
+    | Exp ">=" Exp
+    | Exp "<=" Exp
+    | Exp ">" Exp
+    | Exp "<" Exp
+    | Exp "+" Exp
+    | Exp "-" Exp
+    | Exp "*" Exp
+    | Exp "/" Exp
+    | Exp "%" Exp
+    | "--" EsqVal
+    | "++" EsqVal
+    | EsqVal "--"
+    | EsqVal "++"
+    | "!" Exp
+    | "~" Exp
+    | "new" IDENT "(" ArgumentosOpcionais ")"
+    | IDENT "(" ArgumentosOpcionais ")"
+    | Exp "->" IDENT "(" ArgumentosOpcionais ")"
+    | IDENT
+    | IDENT "[" Exp "]"
+    | NUMBER
+    | STRING
+    | "nil"
+
+ArgumentosOpcionais
+    : Argumentos
+    | empty
+
+Argumentos
+    : Argumentos "," Exp
+    | Exp
+
+EsqVal
+    : IDENT
+    | IDENT "[" Exp "]"
