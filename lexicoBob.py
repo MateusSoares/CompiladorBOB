@@ -31,7 +31,7 @@ reserved = {
 
 tokens = [
     'IDENT',
-    'NUMERO',
+    'NUMBER',
     'STRING',
     'ABRECV',
     'FECHACV',
@@ -62,7 +62,7 @@ tokens = [
     'MAIOR',
     'MENOR',
     'MAIS',
-    'MENOS,'
+    'MENOS',
     'MULT',
     'DIV',
     'MOD',
@@ -73,15 +73,18 @@ tokens = [
     'PONTEIRO',
     'ERRO', ] + list(reserved.values())
 
-# Expressoes regulares para capturar tokens
 
+# Expressoes regulares para capturar tokens
 def t_IDENT(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    pass
+    t.type = reserved.get(t.value, 'IDENT') # Procura por palavras reservadas
+    return t
+
 
 def t_NUMBER(t):
     r'\d+'
-    pass
+    t.value = int(t.value)
+    return t
 
 # Definicao dos tokens
 
@@ -100,10 +103,10 @@ t_ATRIBCOMP = r'\+='
 t_MENOSCOMP = r'\-='
 t_MULTCOMP = r'\*='
 t_DIVCOMP = r'/='
-t_COND = r'?'
-t_OULOG = r'||'
+t_COND = r'\?'
+t_OULOG = r'\|\|'
 t_ELOG = r'&&'
-t_OU = r'|'
+t_OU = r'\|'
 t_E = r'&'
 t_DESLESQ = r'<<'
 t_DESLDIR = r'>>'
@@ -123,3 +126,46 @@ t_INCREMEN = r'\+\+'
 t_NAO = r'\!'
 t_COMPLEM = r'~'
 t_PONTEIRO = r'\->'
+
+
+# Expressao regular para tratar numero de linhas
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+
+
+# Descartar parte da entrada
+t_ignore_SPACES = r'[ \t]+'  # espacos em branco
+t_ignore_COMMENT = r'\#.*'   # comentarios
+
+
+# Tratamento de erros
+def t_error(t):
+    t.type = 'ERRO'
+    t.value = t.value[0]
+    t.lexer.skip(1)
+    return t
+
+
+# Final do arquivo
+def t_eof(t):
+    return None
+
+
+lexer = lex.lex()
+
+if __name__ == '__main__':
+
+    data = '''
+        factorial(n)
+   {
+       return n == 1 ? 1 : n * factorial(n-1) ;
+   }
+        '''
+    lexer.input(data)
+
+    while True:
+        tok = lexer.token()
+        if tok is None:
+            break
+        print(tok)
