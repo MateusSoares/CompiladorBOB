@@ -14,8 +14,8 @@ precedence = (
     ('right', 'NAO'),
     ('left', 'E', 'OU'),
     ('nonassoc', 'IGUAL', 'DIFER', 'MAIOR', 'MENOR', 'MAIORIGUAL', 'MENORIGUAL'),
-    ('left', 'MAIS', 'MENOS'),
     ('left', 'MULT', 'DIV', 'MOD'),
+    ('left', 'MAIS', 'MENOS'),
     )
 
 
@@ -25,14 +25,14 @@ def p_Programa(p):
 
 
 def p_ListaDefinicoes(p):
-    '''ListaDefinicoes : ListaDefinicoes
-        | empty '''
+    '''ListaDefinicoes : ListaDefinicoes Definicao
+                       | empty '''
     pass
 
 
 def p_Definicao(p):
     ''' Definicao : DefinicaoClasse
-        | DefinicaoFuncao '''
+                  | DefinicaoFuncao '''
     pass
 
 
@@ -43,58 +43,58 @@ def p_DefinicaoClasse(p):
 
 def p_ClasseBaseOpcional(p):
     ''' ClasseBaseOpcional : DOISP IDENT
-        | empty '''
+                           | empty '''
     pass
 
 
 def p_ListaMembros(p):
     '''ListaMembros : ListaMembros DefinicaoMembro
-        | empty '''
+                    | empty '''
     pass
 
 
 def p_DefinicaoMembro(p):
     '''DefinicaoMembro : ModificadorOpcional ListaVariaveis PONTOV
-        | ModificadorOpcional IDENT ABREPAR ListaArgsFormaisOpcional FECHAPAR PONTOV '''
+                       | ModificadorOpcional IDENT ABREPAR ListaArgsFormaisOpcional FECHAPAR PONTOV '''
     pass
 
 
 def p_ModificadorOpcional(p):
     '''ModificadorOpcional : STATIC
-        | empty '''
+                           | empty '''
     pass
 
 
 def p_ListaVariaveis(p):
     '''ListaVariaveis : ListaVariaveis VIRG Variavel
-        | Variavel '''
+                      | Variavel '''
     pass
 
 def p_Variavel(p):
     '''Variavel : IDENT
-        | IDENT ABRECOL NUMBER FECHACOL '''
+                | IDENT ABRECOL NUMBER FECHACOL '''
     pass
 
 def p_ListaArgsFormaisOpcional(p):
     '''ListaArgsFormaisOpcional : ListaArgsFormais
-        | empty '''
+                                | empty '''
     pass
 
 
 def p_ListaArgsFormais(p):
     '''ListaArgsFormais : ListaArgsFormais VIRG IDENT
-        | IDENT '''
+                        | IDENT '''
     pass
 
 
 def p_DefinicaoFuncao(p):
-    'DefinicaoFuncao : ClasseEnvolucroOpcional IDENT ABREPAR ListaParametroOpcionais FECHAPAR Bloco'
+    'DefinicaoFuncao : ClasseEnvolucroOpcional IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'
     pass
 
 
 def p_ClasseEnvolucroOpcional(p):
     '''ClasseEnvolucroOpcional : IDENT OPESCOPO
-        | empty '''
+                               | empty '''
     pass
 
 
@@ -105,5 +105,120 @@ def p_ListaParametrosOpcionais(p):
 
 def p_ListaTemporariosOpcionais(p):
     '''ListaTemporariosOpcionais : PONTOV ListaArgsFormais
-        | empty '''
+                                 | empty '''
     pass
+
+
+def p_Bloco(p):
+    'Bloco : ABRECV ListaComandos FECHACV'
+    pass
+
+
+def p_ListaComandos(p):
+    '''ListaComandos : ListaComandos Comando
+                     | empty '''
+    pass
+
+
+def p_Comando(p):
+    '''Comando : IF ABREPAR ExpOpc FECHAPAR Comando ELSE Comando
+               | IF ABREPAR ExpOpc FECHAPAR Comando
+               | WHILE ABREPAR ExpOpc FECHAPAR Comando
+               | DO Comando WHILE ABREPAR ExpOpc FECHAPAR PONTOV
+               | FOR ABREPAR ExpOpc PONTOV ExpOpc PONTOV ExpOpc FECHAPAR Comando
+               | FOREACH IDENT IN IDENT Comando
+               | BREAK PONTOV
+               | CONTINUE PONTOV
+               | RETURN ExpOpc PONTOV
+               | ExpOpc PONTOV
+               | Bloco '''
+    pass
+
+
+def p_ExpOpc(p):
+    '''ExpOpc : Exp
+              | empty '''
+    pass
+
+
+def p_Exp(p):
+    '''Exp : Exp VIRG Exp
+           | EsqVal ATRIB Exp
+           | EsqVal ATRIBCOMP Exp
+           | EsqVal MENOSCOMP Exp
+           | EsqVal MULTCOMP Exp
+           | EsqVal DIVCOMP Exp
+           | Exp COND Exp DOISP Exp
+           | Exp OULOG Exp
+           | Exp ELOG Exp
+           | Exp OU Exp
+           | Exp E Exp
+           | Exp DESLESQ Exp
+           | Exp DESLDIR Exp
+           | Exp IGUAL Exp
+           | Exp DIFER Exp
+           | Exp MAIORIGUAL Exp
+           | Exp MENORIGUAL Exp
+           | Exp MAIOR Exp
+           | Exp MENOR Exp
+           | Exp MAIS Exp
+           | Exp MENOS Exp
+           | Exp MULT Exp
+           | Exp DIV Exp
+           | Exp MOD Exp
+           | DECREM EsqVal
+           | INCREMEN EsqVal
+           | EsqVal DECREM
+           | EsqVal INCREMEN
+           | NAO Exp
+           | COMPLEM Exp
+           | NEW IDENT ABREPAR ArgumentosOpcionais FECHAPAR
+           | IDENT ABREPAR ArgumentosOpcionais FECHAPAR
+           | Exp PONTEIRO ABREPAR ArgumentosOpcionais FECHAPAR
+           | IDENT
+           | IDENT ABRECOL Exp FECHACOL
+           | NUMBER
+           | STRING
+           | NIL '''
+    pass
+
+
+def p_ArgumentosOpcionais(p):
+    '''ArgumentosOpcionais : Argumentos
+                           | empty '''
+    pass
+
+
+def p_Argumentos(p):
+    '''Argumentos : Argumentos VIRG Exp
+                  | Exp '''
+    pass
+
+
+def p_EsqVal(p):
+    '''EsqVal : IDENT
+              | IDENT ABRECOL Exp FECHACOL '''
+    pass
+
+
+def p_empty(p):
+    'empty :'
+    pass
+
+
+def p_error(p):
+    if p is None:
+        print("Sintax error at EOF")
+    else:
+        print("Sintax error at token", p.type, "line=", p.lineno)
+
+
+parser = yacc.yacc()
+
+if __name__ == '__main__':
+    nomeArquivo = 'testeBob.bob'
+    arquivo = open(nomeArquivo, 'r')
+    text = arquivo.read()
+
+    result = parser.parse(text, lexer=lexer)
+    print(result)

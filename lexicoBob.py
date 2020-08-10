@@ -156,13 +156,17 @@ lexer = lex.lex()
 
 if __name__ == '__main__':
 
+    nomeArquivo = 'testeBob.bob'
+    arquivo = open(nomeArquivo, 'r')
+    text = arquivo.read()
+
     data = '''
         factorial(n)
    {
        return n == 1 ? 1 : n * factorial(n-1) ;
    }
         '''
-    lexer.input(data)
+    lexer.input(text)
 
     while True:
         tok = lexer.token()
