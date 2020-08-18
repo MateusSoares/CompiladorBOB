@@ -25,7 +25,9 @@ reserved = {
     'continue': 'CONTINUE',
     'return': 'RETURN',
     'new': 'NEW',
-    'nil': 'NIL', }
+    'nil': 'NIL',
+    'def': 'DEF',
+    'var': 'VAR', }
 
 # Lista com o nome de todos os tokens
 
@@ -82,8 +84,14 @@ def t_IDENT(t):
 
 
 def t_NUMBER(t):
-    r'\d+'
-    t.value = int(t.value)
+    r'[+-]?(?=\.\d|\d)(?:\d+)?(?:\.?\d*)(?:[eE][+-]?\d+)?'
+    t.value = eval(t.value)
+    return t
+
+
+def t_STRING(t):
+    r'\"(.*)\"|\'(.*)\''
+    t.value = t.value[1:-1]
     return t
 
 # Definicao dos tokens
@@ -161,12 +169,9 @@ if __name__ == '__main__':
     text = arquivo.read()
 
     data = '''
-        factorial(n)
-   {
-       return n == 1 ? 1 : n * factorial(n-1) ;
-   }
+        var = 'alou'
         '''
-    lexer.input(text)
+    lexer.input(data)
 
     while True:
         tok = lexer.token()

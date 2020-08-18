@@ -174,7 +174,7 @@ def p_Exp(p):
            | COMPLEM Exp
            | NEW IDENT ABREPAR ArgumentosOpcionais FECHAPAR
            | IDENT ABREPAR ArgumentosOpcionais FECHAPAR
-           | Exp PONTEIRO ABREPAR ArgumentosOpcionais FECHAPAR
+           | Exp PONTEIRO IDENT ABREPAR ArgumentosOpcionais FECHAPAR
            | IDENT
            | IDENT ABRECOL Exp FECHACOL
            | NUMBER

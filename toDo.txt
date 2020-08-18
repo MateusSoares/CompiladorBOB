@@ -1,0 +1,25 @@
+No lexico:
+
++ palavra reservada DEF e VAR
+
++ reconhecer strings
+
++ reconhecer numeros de ponto flutuante
+
+No sintatico:
+
+- tabela de precedencia
+    https://www.ime.usp.br/~pf/algoritmos/apend/precedence.html
+
+- Alteracao das regras com DEF e VAR
+
+    DefinicaoFuncao
+        : DEF ClasseEnvolucroOpcional IDENT "(" ListaParametrosOpcionais ")" Bloco
+
+    DefinicaoMembro
+        : ModificadorOpcional VAR ListaVariaveis ";"
+        | ModificadorOpcional DEF IDENT "(" ListaArgsFormaisOpcional ")" ";"
+
+
+
+        regexr.com/3bf7l

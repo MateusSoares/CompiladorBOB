@@ -24,7 +24,7 @@ ListaMembros
 
 DefinicaoMembro
     : ModificadorOpcional ListaVariaveis ";"
-    | ModificadorOpcional IDENT "(" ListaArgsFormaisOpcional ")" ";"
+    | ModificadorOpcional DEF IDENT "(" ListaArgsFormaisOpcional ")" ";"
 
 ModificadorOpcional
     : "static"
@@ -49,7 +49,7 @@ ListaArgsFormais
 #======== Funcao
 
 DefinicaoFuncao
-    : ClasseEnvolucroOpcional IDENT "(" ListaParametrosOpcionais ")" Bloco
+    : DEF ClasseEnvolucroOpcional IDENT "(" ListaParametrosOpcionais ")" Bloco
 
 ClasseEnvolucroOpcional
     : IDENT "::"
