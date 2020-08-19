@@ -11,11 +11,20 @@ import ply.yacc as yacc
 from lexicoBob import tokens, lexer
 
 precedence = (
-    ('right', 'NAO'),
-    ('left', 'E', 'OU'),
-    ('nonassoc', 'IGUAL', 'DIFER', 'MAIOR', 'MENOR', 'MAIORIGUAL', 'MENORIGUAL'),
+    ('left', 'ABREPAR', 'FECHAPAR', 'ABRECOL', 'FECHACOL', 'PONTEIRO'),
+    ('right', 'INCREMEN', 'DECREM', 'NAO', 'COMPLEM'),
     ('left', 'MULT', 'DIV', 'MOD'),
     ('left', 'MAIS', 'MENOS'),
+    ('left', 'DESLESQ', 'DESLDIR'),
+    ('left', 'MENOR', 'MENORIGUAL', 'MAIORIGUAL', 'MAIOR'),
+    ('left', 'IGUAL', 'DIFER'),
+    ('left', 'E'),
+    ('left', 'OU'),
+    ('left', 'ELOG'),
+    ('left', 'OULOG'),
+    ('right', 'COND', 'DOISP'),
+    ('right', 'ATRIB', 'MENOSCOMP', 'ATRIBCOMP', 'DIVCOMP', 'MULTCOMP'),
+    ('left', 'VIRG'),
     )
 
 
@@ -54,8 +63,8 @@ def p_ListaMembros(p):
 
 
 def p_DefinicaoMembro(p):
-    '''DefinicaoMembro : ModificadorOpcional ListaVariaveis PONTOV
-                       | ModificadorOpcional IDENT ABREPAR ListaArgsFormaisOpcional FECHAPAR PONTOV '''
+    '''DefinicaoMembro : ModificadorOpcional VAR ListaVariaveis PONTOV
+                       | ModificadorOpcional DEF IDENT ABREPAR ListaArgsFormaisOpcional FECHAPAR PONTOV '''
     pass
 
 
@@ -88,7 +97,7 @@ def p_ListaArgsFormais(p):
 
 
 def p_DefinicaoFuncao(p):
-    'DefinicaoFuncao : ClasseEnvolucroOpcional IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'
+    'DefinicaoFuncao : DEF ClasseEnvolucroOpcional IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'
     pass
 
 

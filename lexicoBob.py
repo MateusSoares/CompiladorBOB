@@ -169,7 +169,7 @@ if __name__ == '__main__':
     text = arquivo.read()
 
     data = '''
-        var = 'alou'
+        var = 5.85s
         '''
     lexer.input(data)
 

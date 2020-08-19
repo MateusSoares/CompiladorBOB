@@ -11,7 +11,7 @@ No sintatico:
 - tabela de precedencia
     https://www.ime.usp.br/~pf/algoritmos/apend/precedence.html
 
-- Alteracao das regras com DEF e VAR
++ Alteracao das regras com DEF e VAR
 
     DefinicaoFuncao
         : DEF ClasseEnvolucroOpcional IDENT "(" ListaParametrosOpcionais ")" Bloco
