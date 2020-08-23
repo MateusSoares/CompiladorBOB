@@ -34,7 +34,7 @@ reserved = {
 tokens = [
     'IDENT',
     'INT',
-    'FLOAT'
+    'FLOAT',
     'NUMBER',
     'STRING',
     'ABRECV',
