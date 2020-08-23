@@ -186,6 +186,8 @@ def p_Exp(p):
            | Exp PONTEIRO IDENT ABREPAR ArgumentosOpcionais FECHAPAR
            | IDENT
            | IDENT ABRECOL Exp FECHACOL
+           | FLOAT
+           | INT
            | NUMBER
            | STRING
            | NIL '''
