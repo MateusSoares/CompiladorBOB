@@ -81,7 +81,7 @@ def p_ListaVariaveis(p):
 
 def p_Variavel(p):
     '''Variavel : IDENT
-                | IDENT ABRECOL NUMBER FECHACOL '''
+                | IDENT ABRECOL INT FECHACOL '''
     pass
 
 def p_ListaArgsFormaisOpcional(p):
@@ -175,6 +175,9 @@ def p_Exp(p):
            | Exp MULT Exp
            | Exp DIV Exp
            | Exp MOD Exp
+           | MAIS Exp
+           | MENOS Exp
+           | ABREPAR Exp FECHAPAR
            | DECREM EsqVal
            | INCREMEN EsqVal
            | EsqVal DECREM
@@ -188,7 +191,6 @@ def p_Exp(p):
            | IDENT ABRECOL Exp FECHACOL
            | FLOAT
            | INT
-           | NUMBER
            | STRING
            | NIL '''
     pass

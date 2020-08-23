@@ -194,14 +194,12 @@ lexer = lex.lex()
 
 if __name__ == '__main__':
 
-    nomeArquivo = 'testeBob.bob'
+    nomeArquivo = 'test_lex.txt'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 
-    data = '''
-        var = 5.85s
-        '''
-    lexer.input(data)
+
+    lexer.input(text)
 
     while True:
         tok = lexer.token()

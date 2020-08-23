@@ -8,10 +8,11 @@ class obj {
 
 
 
-def main :: main () {
+def main :: main (a , b ) {
 
     b = 2.3 ;
     a = 5 ;
-
+    a = (-b);
+    b = +a;
 
 }
