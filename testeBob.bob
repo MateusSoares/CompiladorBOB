@@ -9,4 +9,7 @@ class obj {
 
 def main :: main () {
 
+    a = 5 ;
+    b = 2.3 ;
+
 }

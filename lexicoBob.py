@@ -33,6 +33,8 @@ reserved = {
 
 tokens = [
     'IDENT',
+    'INT',
+    'FLOAT'
     'NUMBER',
     'STRING',
     'ABRECV',
@@ -83,11 +85,39 @@ def t_IDENT(t):
     return t
 
 
+def t_Float(t):
+    r'\d+([.]\d*)?'
+    indice = lexer.lexpos
+    car = lexer.lexdata[indice]
+    tam = 0
+    while car.isalpha():
+        t.value += car
+        tam += 1
+        car = lexer.lexdata[indice+tam]
+    if tam > 0:
+            t.type = 'ERRO'
+            t.lexer.skip(tam)
+    else:
+        try:
+            t.value = int(t.value)
+            t.type = 'INT'
+            return t
+        except ValueError:
+            pass
+        try:
+            t.value = float(t.value)
+            t.type = 'FLOAT'
+            return t
+        except ValueError:
+            pass
+    return t
+
+'''
 def t_NUMBER(t):
     r'[+-]?(?=\.\d|\d)(?:\d+)?(?:\.?\d*)(?:[eE][+-]?\d+)?'
     t.value = eval(t.value)
     return t
-
+'''
 
 def t_STRING(t):
     r'\"(.*)\"|\'(.*)\''

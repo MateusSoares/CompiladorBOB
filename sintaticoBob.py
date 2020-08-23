@@ -11,20 +11,20 @@ import ply.yacc as yacc
 from lexicoBob import tokens, lexer
 
 precedence = (
-    ('left', 'ABREPAR', 'FECHAPAR', 'ABRECOL', 'FECHACOL', 'PONTEIRO'),
-    ('right', 'INCREMEN', 'DECREM', 'NAO', 'COMPLEM'),
-    ('left', 'MULT', 'DIV', 'MOD'),
-    ('left', 'MAIS', 'MENOS'),
-    ('left', 'DESLESQ', 'DESLDIR'),
-    ('left', 'MENOR', 'MENORIGUAL', 'MAIORIGUAL', 'MAIOR'),
-    ('left', 'IGUAL', 'DIFER'),
-    ('left', 'E'),
-    ('left', 'OU'),
-    ('left', 'ELOG'),
-    ('left', 'OULOG'),
-    ('right', 'COND', 'DOISP'),
-    ('right', 'ATRIB', 'MENOSCOMP', 'ATRIBCOMP', 'DIVCOMP', 'MULTCOMP'),
     ('left', 'VIRG'),
+    ('right', 'ATRIB', 'MENOSCOMP', 'ATRIBCOMP', 'DIVCOMP', 'MULTCOMP'),
+    ('right', 'COND', 'DOISP'),
+    ('left', 'OULOG'),
+    ('left', 'ELOG'),
+    ('left', 'OU'),
+    ('left', 'E'),
+    ('left', 'IGUAL', 'DIFER'),
+    ('left', 'MENOR', 'MENORIGUAL', 'MAIORIGUAL', 'MAIOR'),
+    ('left', 'DESLESQ', 'DESLDIR'),
+    ('left', 'MAIS', 'MENOS'),
+    ('left', 'MULT', 'DIV', 'MOD'),
+    ('right', 'INCREMEN', 'DECREM', 'NAO', 'COMPLEM'),
+    ('left', 'ABREPAR', 'FECHAPAR', 'ABRECOL', 'FECHACOL', 'PONTEIRO'),
     )
 
 
