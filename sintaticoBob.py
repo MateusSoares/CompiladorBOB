@@ -2,8 +2,9 @@
 
     Analisador sintático para a linguagem Bob.
 
-    Autor : Mateus Soares
-    Data  : 06 de agosto de 2020
+    Autores : Mateus Soares
+            : Rodrigo Pacheco
+    Data    : 06 de agosto de 2020
 
 '''
 
@@ -11,20 +12,20 @@ import ply.yacc as yacc
 from lexicoBob import tokens, lexer
 
 precedence = (
-    ('left', 'VIRG'),
     ('right', 'ATRIB', 'MENOSCOMP', 'ATRIBCOMP', 'DIVCOMP', 'MULTCOMP'),
     ('right', 'COND', 'DOISP'),
     ('left', 'OULOG'),
     ('left', 'ELOG'),
     ('left', 'OU'),
     ('left', 'E'),
-    ('left', 'IGUAL', 'DIFER'),
-    ('left', 'MENOR', 'MENORIGUAL', 'MAIORIGUAL', 'MAIOR'),
+    ('nonassoc', 'IGUAL', 'DIFER'),
+    ('nonassoc', 'MENOR', 'MENORIGUAL', 'MAIORIGUAL', 'MAIOR'),
     ('left', 'DESLESQ', 'DESLDIR'),
     ('left', 'MAIS', 'MENOS'),
     ('left', 'MULT', 'DIV', 'MOD'),
+    ('right', 'UMENOS', 'UMAIS'),
     ('right', 'INCREMEN', 'DECREM', 'NAO', 'COMPLEM'),
-    ('left', 'ABREPAR', 'FECHAPAR', 'ABRECOL', 'FECHACOL', 'PONTEIRO'),
+    ('left',  'PONTEIRO'),
     )
 
 
@@ -46,13 +47,8 @@ def p_Definicao(p):
 
 
 def p_DefinicaoClasse(p):
-    'DefinicaoClasse : CLASS IDENT ClasseBaseOpcional ABRECV ListaMembros FECHACV'
-    pass
-
-
-def p_ClasseBaseOpcional(p):
-    ''' ClasseBaseOpcional : DOISP IDENT
-                           | empty '''
+    ''' DefinicaoClasse : CLASS IDENT DOISP IDENT ABRECV ListaMembros FECHACV
+                        | CLASS IDENT ABRECV ListaMembros FECHACV '''
     pass
 
 
@@ -97,13 +93,8 @@ def p_ListaArgsFormais(p):
 
 
 def p_DefinicaoFuncao(p):
-    'DefinicaoFuncao : DEF ClasseEnvolucroOpcional IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'
-    pass
-
-
-def p_ClasseEnvolucroOpcional(p):
-    '''ClasseEnvolucroOpcional : IDENT OPESCOPO
-                               | empty '''
+    '''DefinicaoFuncao : DEF IDENT OPESCOPO IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco
+                       | DEF IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'''
     pass
 
 
@@ -151,8 +142,7 @@ def p_ExpOpc(p):
 
 
 def p_Exp(p):
-    '''Exp : Exp VIRG Exp
-           | EsqVal ATRIB Exp
+    '''Exp : EsqVal ATRIB Exp
            | EsqVal ATRIBCOMP Exp
            | EsqVal MENOSCOMP Exp
            | EsqVal MULTCOMP Exp
@@ -175,8 +165,6 @@ def p_Exp(p):
            | Exp MULT Exp
            | Exp DIV Exp
            | Exp MOD Exp
-           | MAIS Exp
-           | MENOS Exp
            | ABREPAR Exp FECHAPAR
            | DECREM EsqVal
            | INCREMEN EsqVal
@@ -184,6 +172,8 @@ def p_Exp(p):
            | EsqVal INCREMEN
            | NAO Exp
            | COMPLEM Exp
+           | MENOS Exp %prec UMENOS
+           | MAIS Exp %prec UMAIS
            | NEW IDENT ABREPAR ArgumentosOpcionais FECHAPAR
            | IDENT ABREPAR ArgumentosOpcionais FECHAPAR
            | Exp PONTEIRO IDENT ABREPAR ArgumentosOpcionais FECHAPAR
@@ -229,7 +219,7 @@ def p_error(p):
 parser = yacc.yacc()
 
 if __name__ == '__main__':
-    nomeArquivo = 'testeBob.bob'
+    nomeArquivo = 'test_bob.txt'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 

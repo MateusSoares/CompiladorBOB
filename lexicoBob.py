@@ -2,8 +2,9 @@
 
     Analisador lexico para a linguagem Bob.
 
-    Autor : Mateus Soares
-    Data  : 06 de agosto de 2020
+    Autores : Mateus Soares
+            : Rodrigo Pacheco
+    Data    : 06 de agosto de 2020
 
 '''
 
@@ -35,7 +36,6 @@ tokens = [
     'IDENT',
     'INT',
     'FLOAT',
-    'NUMBER',
     'STRING',
     'ABRECV',
     'FECHACV',
