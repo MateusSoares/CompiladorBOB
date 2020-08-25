@@ -1,0 +1,21 @@
+# o teste abaixo eh o mais chato!
+
+45as
+
+
+// teste do lexico
+# comentario eh assim
+
+"teste do string"
+"sjdfh \" \n""as"
+
+
+class a :
+{
+    var x == a not b;
+    foreach)i++) 45.45.
+    -12.4556e45
+    def a () {
+
+    }
+}
