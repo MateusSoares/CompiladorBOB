@@ -112,12 +112,6 @@ def t_Float(t):
             pass
     return t
 
-'''
-def t_NUMBER(t):
-    r'[+-]?(?=\.\d|\d)(?:\d+)?(?:\.?\d*)(?:[eE][+-]?\d+)?'
-    t.value = eval(t.value)
-    return t
-'''
 
 def t_STRING(t):
     r'\"(.*)\"|\'(.*)\''
