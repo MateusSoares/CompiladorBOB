@@ -105,10 +105,10 @@ def p_DefinicaoClasse(p):
                         | CLASS IDENT ABRECV ListaMembros FECHACV '''
     if len(p) == 8:
         ident = NodeAST(AST.IDENT, [p[2]])
-        filhos = ['CLASSE', ident, p[6]]
+        filhos = [ident, p[6]]
     else:
         ident = NodeAST(AST.IDENT, [p[2]])
-        filhos = ['CLASSE', ident, p[4]]
+        filhos = [ident, p[4]]
     p[0] = NodeAST(AST.CLASSE_DEF, filhos)
 
 
@@ -116,41 +116,73 @@ def p_DefinicaoClasse(p):
 def p_ListaMembros(p):
     '''ListaMembros : ListaMembros DefinicaoMembro
                     | empty '''
-    pass
+    if len(p) == 3:
+        filhos = p[1] + [p[2]]
+    else:
+        filhos = list()
+    p[0] = filhos
+
 
 
 def p_DefinicaoMembro(p):
     '''DefinicaoMembro : ModificadorOpcional VAR ListaVariaveis PONTOV
                        | ModificadorOpcional DEF IDENT ABREPAR ListaArgsFormaisOpcional FECHAPAR PONTOV '''
-    pass
+    if len(p) == 5:
+        filhos = [p[1], p[3]]
+        p[0] = NodeAST(AST.MEMBRO_VAR, filhos)
+    else :
+        ident = NodeAST(AST.IDENT, p[3])
+        filhos = [p[1], ident, p[5]]
+        p[0] = NodeAST(AST.MEMBRO_FUNC, filhos)
 
 
 def p_ModificadorOpcional(p):
     '''ModificadorOpcional : STATIC
                            | empty '''
-    pass
+    if p[1] == 'static':
+        p[0] = p[1]
+    else :
+        p[0] = ''
 
 
 def p_ListaVariaveis(p):
     '''ListaVariaveis : ListaVariaveis VIRG Variavel
                       | Variavel '''
-    pass
+    if len(p) == 4:
+        filhos = p[1] + [p[3]]
+    else:
+        filhos = [p[1]]
+    p[0] = filhos
 
 def p_Variavel(p):
     '''Variavel : IDENT
                 | IDENT ABRECOL INT FECHACOL '''
-    pass
+    if len(p) == 2:
+        p[0] = NodeAST(AST.IDENT, p[1])
+    else:
+        ident = NodeAST(AST.IDENT, p[1])
+        index = NodeAST(AST.NUMBER, p[3])
+        p[0] = [ident, index]
+
 
 def p_ListaArgsFormaisOpcional(p):
     '''ListaArgsFormaisOpcional : ListaArgsFormais
                                 | empty '''
-    pass
+    if p[1] is None :
+        p[0] = ''
+    else:
+        p[0] = p[1]
+
 
 
 def p_ListaArgsFormais(p):
     '''ListaArgsFormais : ListaArgsFormais VIRG IDENT
                         | IDENT '''
-    pass
+    if len(p) == 4:
+        filhos = p[1] + [p[3]]
+    else:
+        filhos = [p[1]]
+    p[0] = filhos
 
 
 def p_DefinicaoFuncao(p):
@@ -159,34 +191,42 @@ def p_DefinicaoFuncao(p):
     if len(p) == 9:
         ident1 = NodeAST(AST.IDENT, [p[2]])
         ident2 = NodeAST(AST.IDENT, [p[4]])
-        filhos = ['CLASSE', ident1, 'FUNCAO', ident2, p[6], p[8]]
+        filhos = [ident1, ident2, p[6], p[8]]
     else:
         ident = NodeAST(AST.IDENT, [p[2]])
-        filhos = ['FUNCAO', ident, p[4], p[6]]
+        filhos = [ident, p[4], p[6]]
 
     p[0] = NodeAST(AST.FUNCAO_DEF, filhos)
 
 
 def p_ListaParametrosOpcionais(p):
     'ListaParametrosOpcionais : ListaArgsFormaisOpcional ListaTemporariosOpcionais'
-    pass
+    p[0] = [p[1], p[2]]
+
 
 
 def p_ListaTemporariosOpcionais(p):
     '''ListaTemporariosOpcionais : PONTOV ListaArgsFormais
                                  | empty '''
-    pass
+    if len(p) == 3:
+        p[0] = p[2]
+    else:
+        p[0] = ''
 
 
 def p_Bloco(p):
     'Bloco : ABRECV ListaComandos FECHACV'
-    pass
+    p[0] = p[2]
 
 
 def p_ListaComandos(p):
     '''ListaComandos : ListaComandos Comando
                      | empty '''
-    pass
+    if len(p) == 3:
+        filhos = p[1] + [p[2]]
+    else:
+        filhos = list()
+    p[0] = NodeAST(AST.SEQ_COM, filhos)
 
 
 def p_Comando(p):
@@ -207,7 +247,10 @@ def p_Comando(p):
 def p_ExpOpc(p):
     '''ExpOpc : Exp
               | empty '''
-    pass
+    if p[1] is not None:
+        p[0] = p[1]
+    else:
+        p[0] = ''
 
 
 def p_Exp(p):

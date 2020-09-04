@@ -4,7 +4,7 @@
 
 class Baskara {
     static var instanciasCriadas;
-    var a, b, c;
+    var a, b[1], c;
     static def inicializa();
     def Baskara(a, b, c);
     def calculaRaizes();
