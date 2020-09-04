@@ -10,6 +10,54 @@
 
 import ply.yacc as yacc
 from lexicoBob import tokens, lexer
+from enum import Enum
+
+
+class AST(Enum):
+    LISTA_DEFINICAO = 1
+    CLASSE_DEF = 3
+    MEMBRO_VAR = 4
+    MEMBRO_FUNC = 5
+    FUNCAO_DEF = 7
+    COMANDO = 8
+    EXPRESSAO = 9
+    SEQ_COM = 10
+    NUMBER = 11
+    STRING = 12
+    IDENT = 13
+
+
+
+class NodeAST:
+
+    def __init__(self, tipo, filhos=None):
+        if not isinstance(tipo, AST):
+            raise ValueError('Tipo nao definido para NodeAST')
+        else:
+            self.tipo = tipo
+
+        # caso LISTA_DEFINICAO : Definicao de classes e funcoes
+        # caso CLASSE : definicao de uma classe
+        # caso CLASSE_MEMBRO : membros da classe
+        # caso MEMBRO_VAR : variaveis membros da classe
+        # caso MEMBRO_FUNC : funcoes membros da classe
+        # caso FUNCAO : definicao de uma funcao
+        # caso BLOCO_FUNC: cada filho denota um COMANDO
+        # caso COMANDO: primeiro filho define qual comando (str)
+        # caso EXPRESSAO: primeiro filho define qual operador (str)
+        # caso SEQ_COM: cada filho denota um comando
+        # caso NUMBER: um filho que traz o valor
+        # caso STRING: um filho que traz o valor
+        # caso IDENT: um filho que traz o valor
+
+        if filhos:
+            self.filhos = filhos
+        else:
+            self.filhos = list()
+
+
+        def __str__(self):
+            return f'Tipo: {self.tipo} Filhos: {self.filhos}'
 
 precedence = (
     ('right', 'ATRIB', 'MENOSCOMP', 'ATRIBCOMP', 'DIVCOMP', 'MULTCOMP'),
@@ -31,25 +79,38 @@ precedence = (
 
 def p_Programa(p):
     'Programa : ListaDefinicoes'
-    pass
+    p[0] = p[1]
 
 
 def p_ListaDefinicoes(p):
     '''ListaDefinicoes : ListaDefinicoes Definicao
                        | empty '''
-    pass
+    if len(p) == 3:
+        filhos = p[1].filhos + [p[2]]
+    else:
+        filhos = list()
+    p[0] = NodeAST(AST.LISTA_DEFINICAO, filhos)
+
 
 
 def p_Definicao(p):
     ''' Definicao : DefinicaoClasse
                   | DefinicaoFuncao '''
-    pass
+    p[0] = p[1]
+
 
 
 def p_DefinicaoClasse(p):
     ''' DefinicaoClasse : CLASS IDENT DOISP IDENT ABRECV ListaMembros FECHACV
                         | CLASS IDENT ABRECV ListaMembros FECHACV '''
-    pass
+    if len(p) == 8:
+        ident = NodeAST(AST.IDENT, [p[2]])
+        filhos = ['CLASSE', ident, p[6]]
+    else:
+        ident = NodeAST(AST.IDENT, [p[2]])
+        filhos = ['CLASSE', ident, p[4]]
+    p[0] = NodeAST(AST.CLASSE_DEF, filhos)
+
 
 
 def p_ListaMembros(p):
@@ -95,7 +156,15 @@ def p_ListaArgsFormais(p):
 def p_DefinicaoFuncao(p):
     '''DefinicaoFuncao : DEF IDENT OPESCOPO IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco
                        | DEF IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'''
-    pass
+    if len(p) == 9:
+        ident1 = NodeAST(AST.IDENT, [p[2]])
+        ident2 = NodeAST(AST.IDENT, [p[4]])
+        filhos = ['CLASSE', ident1, 'FUNCAO', ident2, p[6], p[8]]
+    else:
+        ident = NodeAST(AST.IDENT, [p[2]])
+        filhos = ['FUNCAO', ident, p[4], p[6]]
+
+    p[0] = NodeAST(AST.FUNCAO_DEF, filhos)
 
 
 def p_ListaParametrosOpcionais(p):
