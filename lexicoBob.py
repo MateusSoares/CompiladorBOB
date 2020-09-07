@@ -114,8 +114,9 @@ def t_Float(t):
 
 
 def t_STRING(t):
-    r'\"(.*)\"|\'(.*)\''
-    t.value = t.value[1:-1]
+    r' ["]([^"\\]|(\\.))*["] '
+    #t.value = t.value[1:-1]
+    t.type = 'STRING'
     return t
 
 # Definicao dos tokens

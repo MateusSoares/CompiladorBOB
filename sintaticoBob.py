@@ -139,10 +139,7 @@ def p_DefinicaoMembro(p):
 def p_ModificadorOpcional(p):
     '''ModificadorOpcional : STATIC
                            | empty '''
-    if p[1] == 'static':
-        p[0] = p[1]
-    else :
-        p[0] = ''
+    p[0] = p[1]
 
 
 def p_ListaVariaveis(p):
@@ -168,10 +165,7 @@ def p_Variavel(p):
 def p_ListaArgsFormaisOpcional(p):
     '''ListaArgsFormaisOpcional : ListaArgsFormais
                                 | empty '''
-    if p[1] is None :
-        p[0] = ''
-    else:
-        p[0] = p[1]
+    p[0] = p[1]
 
 
 
@@ -198,6 +192,8 @@ def p_DefinicaoFuncao(p):
 
     p[0] = NodeAST(AST.FUNCAO_DEF, filhos)
 
+    print(filhos)
+
 
 def p_ListaParametrosOpcionais(p):
     'ListaParametrosOpcionais : ListaArgsFormaisOpcional ListaTemporariosOpcionais'
@@ -211,7 +207,7 @@ def p_ListaTemporariosOpcionais(p):
     if len(p) == 3:
         p[0] = p[2]
     else:
-        p[0] = ''
+        p[0] = p[1]
 
 
 def p_Bloco(p):
@@ -223,7 +219,7 @@ def p_ListaComandos(p):
     '''ListaComandos : ListaComandos Comando
                      | empty '''
     if len(p) == 3:
-        filhos = p[1] + [p[2]]
+        filhos = p[1].filhos + [p[2]]
     else:
         filhos = list()
     p[0] = NodeAST(AST.SEQ_COM, filhos)
@@ -241,16 +237,44 @@ def p_Comando(p):
                | RETURN ExpOpc PONTOV
                | ExpOpc PONTOV
                | Bloco '''
-    pass
+
+    if p[1] == 'if':
+        if len(p) == 6:
+            filhos = ['IF', p[3], p[5]]
+        else:
+            filhos = ['IF', p[3], p[5], p[7]]
+        p[0] = NodeAST(AST.COMANDO, filhos)
+    elif p[1] == 'while':
+        filhos = ['WHILE', p[3], p[5]]
+        p[0] = NodeAST(AST.COMANDO, filhos)
+    elif p[1] == 'do':
+        filhos = ['DO', p[2], p[5]]
+        p[0] = NodeAST(AST.COMANDO, filhos)
+    elif p[1] == 'for':
+        filhos = ['FOR', p[3], p[5], p[7], p[9]]
+        p[0] = NodeAST(AST.COMANDO, filhos)
+    elif p[1] == 'foreach':
+        ident1 = NodeAST(AST.IDENT, p[2])
+        ident2 = NodeAST(AST.IDENT, p[4])
+        filhos = ['FOREACH', ident1, ident2, p[5]]
+        p[0] = NodeAST(AST.COMANDO, filhos)
+    elif p[1] == 'break':
+        p[0] = NodeAST(AST.COMANDO, ['BREAK'])
+    elif p[1] == 'continue':
+        p[0] = NodeAST(AST.COMANDO, ['CONTINUE'])
+    elif p[1] == 'return':
+        p[0] = NodeAST(AST.COMANDO, ['RETURN', p[2]])
+    elif len(p) == 3:
+        p[0] = NodeAST(AST.COMANDO, [p[1]])
+    else:
+        p[0] = p[1]
+
 
 
 def p_ExpOpc(p):
     '''ExpOpc : Exp
               | empty '''
-    if p[1] is not None:
-        p[0] = p[1]
-    else:
-        p[0] = ''
+    p[0] = p[1]
 
 
 def p_Exp(p):
@@ -295,30 +319,116 @@ def p_Exp(p):
            | INT
            | STRING
            | NIL '''
-    pass
+    if len(p) == 2:
+        if isinstance(p[1], int):
+            filhos = ['INT', str(p[1])]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif isinstance(p[1], float):
+            filhos = ['FLOAT', str(p[1])]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        else:
+            if p[1] == 'nil':
+                filhos = ['NIL', p[1]]
+                p[0] = NodeAST(AST.EXPRESSAO, filhos)
+            elif p[1][0] == '"':
+                filhos = ['STRING', p[1][1:-1]]
+                p[0] = NodeAST(AST.EXPRESSAO, filhos)
+            else:
+                filhos = ['IDENT', p[1]]
+                p[0] = NodeAST(AST.EXPRESSAO, filhos)
+    elif len(p) == 3:
+        if p[1] == '~':
+            filhos = ['COMPLEM', p[1]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[1] == '!':
+            filhos = ['NAO', p[1]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[1] == '++':
+            filhos = ['INCREMEN', p[1]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[1] == '--':
+            filhos = ['DECREMEN', p[1]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '++':
+            filhos = ['INCREMEN', p[2]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '--':
+            filhos = ['DECREMEN', p[2]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[1] == '+':
+            filhos = ['MAIS', p[1]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[1] == '-':
+            filhos = ['MENOS', p[1]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+    elif len(p) == 4:
+        if p[1] == '(':
+            filhos = ['ABREPAR', p[2]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '=':
+            filhos = ['ATRIB', p[1], p[3]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '+=':
+            filhos = ['ATRIBCOMP', p[1], p[3]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '-=':
+            filhos = ['MENOSCOMP', p[1], p[3]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '*=':
+            filhos = ['MULTCOMP', p[1], p[3]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        elif p[2] == '/=':
+            filhos = ['DIVCOMP', p[1], p[3]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        else:
+            filhos = [p[2], p[1], p[3]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+    elif len(p) == 5:
+        filhos = ['IDENT', p[1], p[3]]
+        p[0] = NodeAST(AST.EXPRESSAO, filhos)
+    elif len(p) == 6:
+        if p[1] == 'new':
+            filhos = ['NEW', p[2], p[4]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        else:
+            filhos = ['COND', p[1], p[3], p[4]]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+    elif len(p) == 7:
+        filhos = ['PONTEIRO', p[1], p[3], p[5]]
+        p[0] = NodeAST(AST.EXPRESSAO, filhos)
+        pass
+
 
 
 def p_ArgumentosOpcionais(p):
     '''ArgumentosOpcionais : Argumentos
                            | empty '''
-    pass
+    p[0] = p[1]
 
 
 def p_Argumentos(p):
     '''Argumentos : Argumentos VIRG Exp
                   | Exp '''
-    pass
+    if len(p) == 4:
+        filhos = p[1] + [p[3]]
+    else:
+        filhos = [p[1]]
+    p[0] = filhos
 
 
 def p_EsqVal(p):
-    '''EsqVal : IDENT
-              | IDENT ABRECOL Exp FECHACOL '''
-    pass
+    '''EsqVal : IDENT ABRECOL Exp FECHACOL
+              | IDENT '''
+    if len(p) == 2:
+        p[0] = NodeAST(AST.IDENT, p[1])
+    else:
+        ident = NodeAST(AST.IDENT, p[1])
+        p[0] = [ident, p[3]]
 
 
 def p_empty(p):
     'empty :'
-    pass
+    p[0] = None
 
 
 def p_error(p):

@@ -94,13 +94,13 @@ Rule 84    ArgumentosOpcionais -> Argumentos
 Rule 85    ArgumentosOpcionais -> empty
 Rule 86    Argumentos -> Argumentos VIRG Exp
 Rule 87    Argumentos -> Exp
-Rule 88    EsqVal -> IDENT
-Rule 89    EsqVal -> IDENT ABRECOL Exp FECHACOL
+Rule 88    EsqVal -> IDENT ABRECOL Exp FECHACOL
+Rule 89    EsqVal -> IDENT
 Rule 90    empty -> <empty>
 
 Terminals, with rules where they appear
 
-ABRECOL              : 17 79 89
+ABRECOL              : 17 79 88
 ABRECV               : 6 7 27
 ABREPAR              : 11 22 23 30 31 32 33 34 66 75 76 77
 ATRIB                : 43
@@ -123,7 +123,7 @@ E                    : 52
 ELOG                 : 50
 ELSE                 : 30
 ERRO                 : 
-FECHACOL             : 17 79 89
+FECHACOL             : 17 79 88
 FECHACV              : 6 7 27
 FECHAPAR             : 11 22 23 30 31 32 33 34 66 75 76 77
 FLOAT                : 80
@@ -172,7 +172,7 @@ DefinicaoClasse      : 4
 DefinicaoFuncao      : 5
 DefinicaoMembro      : 8
 EsqVal               : 43 44 45 46 47 67 68 69 70
-Exp                  : 41 43 44 45 46 47 48 48 48 49 49 50 50 51 51 52 52 53 53 54 54 55 55 56 56 57 57 58 58 59 59 60 60 61 61 62 62 63 63 64 64 65 65 66 71 72 73 74 77 79 86 87 89
+Exp                  : 41 43 44 45 46 47 48 48 48 49 49 50 50 51 51 52 52 53 53 54 54 55 55 56 56 57 57 58 58 59 59 60 60 61 61 62 62 63 63 64 64 65 65 66 71 72 73 74 77 79 86 87 88
 ExpOpc               : 30 31 32 33 34 34 34 38 39
 ListaArgsFormais     : 18 20 25
 ListaArgsFormaisOpcional : 11 24
@@ -776,8 +776,8 @@ state 50
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     FECHACV         shift and go to state 57
     IF              shift and go to state 59
@@ -1009,8 +1009,8 @@ state 60
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -1102,8 +1102,8 @@ state 63
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IF              shift and go to state 59
     WHILE           shift and go to state 62
@@ -1155,8 +1155,8 @@ state 66
     (76) Exp -> IDENT . ABREPAR ArgumentosOpcionais FECHAPAR
     (78) Exp -> IDENT .
     (79) Exp -> IDENT . ABRECOL Exp FECHACOL
-    (88) EsqVal -> IDENT .
-    (89) EsqVal -> IDENT . ABRECOL Exp FECHACOL
+    (88) EsqVal -> IDENT . ABRECOL Exp FECHACOL
+    (89) EsqVal -> IDENT .
 
     ABREPAR         shift and go to state 95
     COND            reduce using rule 78 (Exp -> IDENT .)
@@ -1184,13 +1184,13 @@ state 66
     FECHACOL        reduce using rule 78 (Exp -> IDENT .)
     DOISP           reduce using rule 78 (Exp -> IDENT .)
     ABRECOL         shift and go to state 96
-    ATRIB           reduce using rule 88 (EsqVal -> IDENT .)
-    ATRIBCOMP       reduce using rule 88 (EsqVal -> IDENT .)
-    MENOSCOMP       reduce using rule 88 (EsqVal -> IDENT .)
-    MULTCOMP        reduce using rule 88 (EsqVal -> IDENT .)
-    DIVCOMP         reduce using rule 88 (EsqVal -> IDENT .)
-    DECREM          reduce using rule 88 (EsqVal -> IDENT .)
-    INCREMEN        reduce using rule 88 (EsqVal -> IDENT .)
+    ATRIB           reduce using rule 89 (EsqVal -> IDENT .)
+    ATRIBCOMP       reduce using rule 89 (EsqVal -> IDENT .)
+    MENOSCOMP       reduce using rule 89 (EsqVal -> IDENT .)
+    MULTCOMP        reduce using rule 89 (EsqVal -> IDENT .)
+    DIVCOMP         reduce using rule 89 (EsqVal -> IDENT .)
+    DECREM          reduce using rule 89 (EsqVal -> IDENT .)
+    INCREMEN        reduce using rule 89 (EsqVal -> IDENT .)
 
 
 state 67
@@ -1254,8 +1254,8 @@ state 69
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -1425,8 +1425,8 @@ state 74
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -1489,8 +1489,8 @@ state 75
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -1512,8 +1512,8 @@ state 75
 state 76
 
     (67) Exp -> DECREM . EsqVal
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IDENT           shift and go to state 129
 
@@ -1522,8 +1522,8 @@ state 76
 state 77
 
     (68) Exp -> INCREMEN . EsqVal
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IDENT           shift and go to state 129
 
@@ -1573,8 +1573,8 @@ state 78
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -1637,8 +1637,8 @@ state 79
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -1854,8 +1854,8 @@ state 88
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2000,8 +2000,8 @@ state 91
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2077,8 +2077,8 @@ state 93
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2156,8 +2156,8 @@ state 95
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     FECHAPAR        reduce using rule 90 (empty -> .)
     ABREPAR         shift and go to state 60
@@ -2183,7 +2183,7 @@ state 95
 state 96
 
     (79) Exp -> IDENT ABRECOL . Exp FECHACOL
-    (89) EsqVal -> IDENT ABRECOL . Exp FECHACOL
+    (88) EsqVal -> IDENT ABRECOL . Exp FECHACOL
     (43) Exp -> . EsqVal ATRIB Exp
     (44) Exp -> . EsqVal ATRIBCOMP Exp
     (45) Exp -> . EsqVal MENOSCOMP Exp
@@ -2225,8 +2225,8 @@ state 96
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2358,8 +2358,8 @@ state 100
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2422,8 +2422,8 @@ state 101
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2486,8 +2486,8 @@ state 102
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2550,8 +2550,8 @@ state 103
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2614,8 +2614,8 @@ state 104
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2678,8 +2678,8 @@ state 105
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2742,8 +2742,8 @@ state 106
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2806,8 +2806,8 @@ state 107
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2870,8 +2870,8 @@ state 108
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2934,8 +2934,8 @@ state 109
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -2998,8 +2998,8 @@ state 110
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3062,8 +3062,8 @@ state 111
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3126,8 +3126,8 @@ state 112
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3190,8 +3190,8 @@ state 113
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3254,8 +3254,8 @@ state 114
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3318,8 +3318,8 @@ state 115
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3382,8 +3382,8 @@ state 116
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3446,8 +3446,8 @@ state 117
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3517,8 +3517,8 @@ state 119
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3581,8 +3581,8 @@ state 120
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3645,8 +3645,8 @@ state 121
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3709,8 +3709,8 @@ state 122
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -3773,8 +3773,8 @@ state 123
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -4023,34 +4023,34 @@ state 128
 
 state 129
 
-    (88) EsqVal -> IDENT .
-    (89) EsqVal -> IDENT . ABRECOL Exp FECHACOL
+    (88) EsqVal -> IDENT . ABRECOL Exp FECHACOL
+    (89) EsqVal -> IDENT .
 
-    COND            reduce using rule 88 (EsqVal -> IDENT .)
-    OULOG           reduce using rule 88 (EsqVal -> IDENT .)
-    ELOG            reduce using rule 88 (EsqVal -> IDENT .)
-    OU              reduce using rule 88 (EsqVal -> IDENT .)
-    E               reduce using rule 88 (EsqVal -> IDENT .)
-    DESLESQ         reduce using rule 88 (EsqVal -> IDENT .)
-    DESLDIR         reduce using rule 88 (EsqVal -> IDENT .)
-    IGUAL           reduce using rule 88 (EsqVal -> IDENT .)
-    DIFER           reduce using rule 88 (EsqVal -> IDENT .)
-    MAIORIGUAL      reduce using rule 88 (EsqVal -> IDENT .)
-    MENORIGUAL      reduce using rule 88 (EsqVal -> IDENT .)
-    MAIOR           reduce using rule 88 (EsqVal -> IDENT .)
-    MENOR           reduce using rule 88 (EsqVal -> IDENT .)
-    MAIS            reduce using rule 88 (EsqVal -> IDENT .)
-    MENOS           reduce using rule 88 (EsqVal -> IDENT .)
-    MULT            reduce using rule 88 (EsqVal -> IDENT .)
-    DIV             reduce using rule 88 (EsqVal -> IDENT .)
-    MOD             reduce using rule 88 (EsqVal -> IDENT .)
-    PONTEIRO        reduce using rule 88 (EsqVal -> IDENT .)
-    PONTOV          reduce using rule 88 (EsqVal -> IDENT .)
-    FECHAPAR        reduce using rule 88 (EsqVal -> IDENT .)
-    VIRG            reduce using rule 88 (EsqVal -> IDENT .)
-    FECHACOL        reduce using rule 88 (EsqVal -> IDENT .)
-    DOISP           reduce using rule 88 (EsqVal -> IDENT .)
     ABRECOL         shift and go to state 172
+    COND            reduce using rule 89 (EsqVal -> IDENT .)
+    OULOG           reduce using rule 89 (EsqVal -> IDENT .)
+    ELOG            reduce using rule 89 (EsqVal -> IDENT .)
+    OU              reduce using rule 89 (EsqVal -> IDENT .)
+    E               reduce using rule 89 (EsqVal -> IDENT .)
+    DESLESQ         reduce using rule 89 (EsqVal -> IDENT .)
+    DESLDIR         reduce using rule 89 (EsqVal -> IDENT .)
+    IGUAL           reduce using rule 89 (EsqVal -> IDENT .)
+    DIFER           reduce using rule 89 (EsqVal -> IDENT .)
+    MAIORIGUAL      reduce using rule 89 (EsqVal -> IDENT .)
+    MENORIGUAL      reduce using rule 89 (EsqVal -> IDENT .)
+    MAIOR           reduce using rule 89 (EsqVal -> IDENT .)
+    MENOR           reduce using rule 89 (EsqVal -> IDENT .)
+    MAIS            reduce using rule 89 (EsqVal -> IDENT .)
+    MENOS           reduce using rule 89 (EsqVal -> IDENT .)
+    MULT            reduce using rule 89 (EsqVal -> IDENT .)
+    DIV             reduce using rule 89 (EsqVal -> IDENT .)
+    MOD             reduce using rule 89 (EsqVal -> IDENT .)
+    PONTEIRO        reduce using rule 89 (EsqVal -> IDENT .)
+    PONTOV          reduce using rule 89 (EsqVal -> IDENT .)
+    FECHAPAR        reduce using rule 89 (EsqVal -> IDENT .)
+    VIRG            reduce using rule 89 (EsqVal -> IDENT .)
+    FECHACOL        reduce using rule 89 (EsqVal -> IDENT .)
+    DOISP           reduce using rule 89 (EsqVal -> IDENT .)
 
 
 state 130
@@ -4381,7 +4381,7 @@ state 145
 state 146
 
     (79) Exp -> IDENT ABRECOL Exp . FECHACOL
-    (89) EsqVal -> IDENT ABRECOL Exp . FECHACOL
+    (88) EsqVal -> IDENT ABRECOL Exp . FECHACOL
     (48) Exp -> Exp . COND Exp DOISP Exp
     (49) Exp -> Exp . OULOG Exp
     (50) Exp -> Exp . ELOG Exp
@@ -6027,7 +6027,7 @@ state 171
 
 state 172
 
-    (89) EsqVal -> IDENT ABRECOL . Exp FECHACOL
+    (88) EsqVal -> IDENT ABRECOL . Exp FECHACOL
     (43) Exp -> . EsqVal ATRIB Exp
     (44) Exp -> . EsqVal ATRIBCOMP Exp
     (45) Exp -> . EsqVal MENOSCOMP Exp
@@ -6069,8 +6069,8 @@ state 172
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -6138,8 +6138,8 @@ state 173
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     FECHAPAR        reduce using rule 90 (empty -> .)
     ABREPAR         shift and go to state 60
@@ -6232,8 +6232,8 @@ state 175
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IF              shift and go to state 59
     WHILE           shift and go to state 62
@@ -6325,8 +6325,8 @@ state 176
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IF              shift and go to state 59
     WHILE           shift and go to state 62
@@ -6406,8 +6406,8 @@ state 177
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -6476,8 +6476,8 @@ state 178
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -6558,8 +6558,8 @@ state 179
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IF              shift and go to state 59
     WHILE           shift and go to state 62
@@ -6666,8 +6666,8 @@ state 181
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -6689,7 +6689,7 @@ state 181
 state 182
 
     (79) Exp -> IDENT ABRECOL Exp FECHACOL .
-    (89) EsqVal -> IDENT ABRECOL Exp FECHACOL .
+    (88) EsqVal -> IDENT ABRECOL Exp FECHACOL .
 
     COND            reduce using rule 79 (Exp -> IDENT ABRECOL Exp FECHACOL .)
     OULOG           reduce using rule 79 (Exp -> IDENT ABRECOL Exp FECHACOL .)
@@ -6715,13 +6715,13 @@ state 182
     VIRG            reduce using rule 79 (Exp -> IDENT ABRECOL Exp FECHACOL .)
     FECHACOL        reduce using rule 79 (Exp -> IDENT ABRECOL Exp FECHACOL .)
     DOISP           reduce using rule 79 (Exp -> IDENT ABRECOL Exp FECHACOL .)
-    ATRIB           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    ATRIBCOMP       reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MENOSCOMP       reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MULTCOMP        reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DIVCOMP         reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DECREM          reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    INCREMEN        reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    ATRIB           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    ATRIBCOMP       reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MENOSCOMP       reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MULTCOMP        reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DIVCOMP         reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DECREM          reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    INCREMEN        reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
 
 
 state 183
@@ -6768,8 +6768,8 @@ state 183
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -6837,8 +6837,8 @@ state 184
     (81) Exp -> . INT
     (82) Exp -> . STRING
     (83) Exp -> . NIL
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     FECHAPAR        reduce using rule 90 (empty -> .)
     ABREPAR         shift and go to state 60
@@ -6863,7 +6863,7 @@ state 184
 
 state 185
 
-    (89) EsqVal -> IDENT ABRECOL Exp . FECHACOL
+    (88) EsqVal -> IDENT ABRECOL Exp . FECHACOL
     (48) Exp -> Exp . COND Exp DOISP Exp
     (49) Exp -> Exp . OULOG Exp
     (50) Exp -> Exp . ELOG Exp
@@ -7148,32 +7148,32 @@ state 194
 
 state 195
 
-    (89) EsqVal -> IDENT ABRECOL Exp FECHACOL .
+    (88) EsqVal -> IDENT ABRECOL Exp FECHACOL .
 
-    COND            reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    OULOG           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    ELOG            reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    OU              reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    E               reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DESLESQ         reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DESLDIR         reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    IGUAL           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DIFER           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MAIORIGUAL      reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MENORIGUAL      reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MAIOR           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MENOR           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MAIS            reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MENOS           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MULT            reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DIV             reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    MOD             reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    PONTEIRO        reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    PONTOV          reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    FECHAPAR        reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    VIRG            reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    FECHACOL        reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
-    DOISP           reduce using rule 89 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    COND            reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    OULOG           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    ELOG            reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    OU              reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    E               reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DESLESQ         reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DESLDIR         reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    IGUAL           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DIFER           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MAIORIGUAL      reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MENORIGUAL      reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MAIOR           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MENOR           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MAIS            reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MENOS           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MULT            reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DIV             reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    MOD             reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    PONTEIRO        reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    PONTOV          reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    FECHAPAR        reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    VIRG            reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    FECHACOL        reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
+    DOISP           reduce using rule 88 (EsqVal -> IDENT ABRECOL Exp FECHACOL .)
 
 
 state 196
@@ -7265,8 +7265,8 @@ state 197
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IF              shift and go to state 59
     WHILE           shift and go to state 62
@@ -7353,8 +7353,8 @@ state 199
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     ABREPAR         shift and go to state 60
     DECREM          shift and go to state 76
@@ -7534,8 +7534,8 @@ state 204
     (82) Exp -> . STRING
     (83) Exp -> . NIL
     (90) empty -> .
-    (88) EsqVal -> . IDENT
-    (89) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (88) EsqVal -> . IDENT ABRECOL Exp FECHACOL
+    (89) EsqVal -> . IDENT
 
     IF              shift and go to state 59
     WHILE           shift and go to state 62
