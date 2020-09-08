@@ -396,7 +396,7 @@ def p_Exp(p):
     elif len(p) == 7:
         filhos = ['PONTEIRO', p[1], p[3], p[5]]
         p[0] = NodeAST(AST.EXPRESSAO, filhos)
-        pass
+
 
 
 
