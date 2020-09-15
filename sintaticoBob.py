@@ -322,17 +322,17 @@ def p_Exp(p):
     if len(p) == 2:
         if isinstance(p[1], int):
             filhos = ['INT', str(p[1])]
-            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+            p[0] = NodeAST(AST.NUMBER, filhos)
         elif isinstance(p[1], float):
             filhos = ['FLOAT', str(p[1])]
-            p[0] = NodeAST(AST.EXPRESSAO, filhos)
+            p[0] = NodeAST(AST.NUMBER, filhos)
         else:
             if p[1] == 'nil':
                 filhos = ['NIL', p[1]]
                 p[0] = NodeAST(AST.EXPRESSAO, filhos)
             elif p[1][0] == '"':
                 filhos = ['STRING', p[1][1:-1]]
-                p[0] = NodeAST(AST.EXPRESSAO, filhos)
+                p[0] = NodeAST(AST.STRING, filhos)
             else:
                 filhos = ['IDENT', p[1]]
                 p[0] = NodeAST(AST.EXPRESSAO, filhos)
