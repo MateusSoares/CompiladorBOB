@@ -15,16 +15,16 @@ from enum import Enum
 
 class AST(Enum):
     LISTA_DEFINICAO = 1
-    CLASSE_DEF = 3
-    MEMBRO_VAR = 4
-    MEMBRO_FUNC = 5
-    FUNCAO_DEF = 7
-    COMANDO = 8
-    EXPRESSAO = 9
-    SEQ_COM = 10
-    NUMBER = 11
-    STRING = 12
-    IDENT = 13
+    CLASSE_DEF = 2
+    MEMBRO_VAR = 3
+    MEMBRO_FUNC = 4
+    FUNCAO_DEF = 5
+    COMANDO = 6
+    EXPRESSAO = 7
+    SEQ_COM = 8
+    NUMBER = 9
+    STRING = 10
+    IDENT = 11
 
 
 
@@ -37,12 +37,10 @@ class NodeAST:
             self.tipo = tipo
 
         # caso LISTA_DEFINICAO : Definicao de classes e funcoes
-        # caso CLASSE : definicao de uma classe
-        # caso CLASSE_MEMBRO : membros da classe
+        # caso CLASSE_DEF : definicao de uma classe
         # caso MEMBRO_VAR : variaveis membros da classe
         # caso MEMBRO_FUNC : funcoes membros da classe
-        # caso FUNCAO : definicao de uma funcao
-        # caso BLOCO_FUNC: cada filho denota um COMANDO
+        # caso FUNCAO_DEF : definicao de uma funcao
         # caso COMANDO: primeiro filho define qual comando (str)
         # caso EXPRESSAO: primeiro filho define qual operador (str)
         # caso SEQ_COM: cada filho denota um comando
@@ -331,11 +329,9 @@ def p_Exp(p):
                 filhos = ['NIL', p[1]]
                 p[0] = NodeAST(AST.EXPRESSAO, filhos)
             elif p[1][0] == '"':
-                filhos = ['STRING', p[1][1:-1]]
-                p[0] = NodeAST(AST.STRING, filhos)
+                p[0] = NodeAST(AST.STRING, p[1][1:-1])
             else:
-                filhos = ['IDENT', p[1]]
-                p[0] = NodeAST(AST.EXPRESSAO, filhos)
+                p[0] = NodeAST(AST.IDENT, p[1])
     elif len(p) == 3:
         if p[1] == '~':
             filhos = ['COMPLEM', p[1]]
