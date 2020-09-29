@@ -16,15 +16,21 @@ from enum import Enum
 class AST(Enum):
     LISTA_DEFINICAO = 1
     CLASSE_DEF = 2
+    LISTA_MEMBROS = 15
+    LISTA_VAR = 16
     MEMBRO_VAR = 3
     MEMBRO_FUNC = 4
     FUNCAO_DEF = 5
-    COMANDO = 6
-    EXPRESSAO = 7
-    SEQ_COM = 8
-    NUMBER = 9
-    STRING = 10
-    IDENT = 11
+    PARAMETROS = 6
+    LISTA_TEMP = 7
+    LISTA_ARGS = 8
+    COMANDO = 9
+    EXPRESSAO = 10
+    ARGS = 17
+    SEQ_COM = 11
+    NUMBER = 12
+    STRING = 13
+    IDENT = 14
 
 
 
@@ -103,10 +109,11 @@ def p_DefinicaoClasse(p):
                         | CLASS IDENT ABRECV ListaMembros FECHACV '''
     if len(p) == 8:
         ident = NodeAST(AST.IDENT, [p[2]])
-        filhos = [ident, p[6]]
+        ident2 = NodeAST(AST.IDENT, [p[4]])
+        filhos = [ident, ident2, p[6]]
     else:
         ident = NodeAST(AST.IDENT, [p[2]])
-        filhos = [ident, p[4]]
+        filhos = [ident, None, p[4]]
     p[0] = NodeAST(AST.CLASSE_DEF, filhos)
 
 
@@ -115,10 +122,10 @@ def p_ListaMembros(p):
     '''ListaMembros : ListaMembros DefinicaoMembro
                     | empty '''
     if len(p) == 3:
-        filhos = p[1] + [p[2]]
+        filhos = p[1].filhos + [p[2]]
     else:
         filhos = list()
-    p[0] = filhos
+    p[0] = NodeAST(AST.LISTA_MEMBROS, filhos)
 
 
 
@@ -144,26 +151,24 @@ def p_ListaVariaveis(p):
     '''ListaVariaveis : ListaVariaveis VIRG Variavel
                       | Variavel '''
     if len(p) == 4:
-        filhos = p[1] + [p[3]]
+        filhos = p[1].filhos + [p[3]]
     else:
         filhos = [p[1]]
-    p[0] = filhos
+    p[0] = NodeAST(AST.LISTA_VAR, filhos)
 
 def p_Variavel(p):
     '''Variavel : IDENT
                 | IDENT ABRECOL INT FECHACOL '''
     if len(p) == 2:
-        p[0] = NodeAST(AST.IDENT, p[1])
+        p[0] = NodeAST(AST.IDENT, [p[1]])
     else:
-        ident = NodeAST(AST.IDENT, p[1])
-        index = NodeAST(AST.NUMBER, p[3])
-        p[0] = [ident, index]
+        p[0] = NodeAST(AST.IDENT, [p[1], p[3]])
 
 
 def p_ListaArgsFormaisOpcional(p):
     '''ListaArgsFormaisOpcional : ListaArgsFormais
                                 | empty '''
-    p[0] = p[1]
+    p[0] = NodeAST(AST.LISTA_ARGS, p[1])
 
 
 
@@ -171,9 +176,9 @@ def p_ListaArgsFormais(p):
     '''ListaArgsFormais : ListaArgsFormais VIRG IDENT
                         | IDENT '''
     if len(p) == 4:
-        filhos = p[1] + [p[3]]
+        filhos = p[1] + [NodeAST(AST.IDENT, p[3])]
     else:
-        filhos = [p[1]]
+        filhos = [NodeAST(AST.IDENT, p[1])]
     p[0] = filhos
 
 
@@ -186,7 +191,7 @@ def p_DefinicaoFuncao(p):
         filhos = [ident1, ident2, p[6], p[8]]
     else:
         ident = NodeAST(AST.IDENT, [p[2]])
-        filhos = [ident, p[4], p[6]]
+        filhos = [ident, None, p[4], p[6]]
 
     p[0] = NodeAST(AST.FUNCAO_DEF, filhos)
 
@@ -195,7 +200,7 @@ def p_DefinicaoFuncao(p):
 
 def p_ListaParametrosOpcionais(p):
     'ListaParametrosOpcionais : ListaArgsFormaisOpcional ListaTemporariosOpcionais'
-    p[0] = [p[1], p[2]]
+    p[0] = NodeAST(AST.PARAMETROS, [p[1], p[2]])
 
 
 
@@ -203,9 +208,9 @@ def p_ListaTemporariosOpcionais(p):
     '''ListaTemporariosOpcionais : PONTOV ListaArgsFormais
                                  | empty '''
     if len(p) == 3:
-        p[0] = p[2]
+        p[0] = NodeAST(AST.LISTA_TEMP, p[2])
     else:
-        p[0] = p[1]
+        p[0] = NodeAST(AST.LISTA_TEMP, p[1])
 
 
 def p_Bloco(p):
@@ -319,19 +324,22 @@ def p_Exp(p):
            | NIL '''
     if len(p) == 2:
         if isinstance(p[1], int):
-            filhos = ['INT', str(p[1])]
-            p[0] = NodeAST(AST.NUMBER, filhos)
+            filhos = ['INT', NodeAST(AST.NUMBER, [str(p[1])])]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
         elif isinstance(p[1], float):
-            filhos = ['FLOAT', str(p[1])]
-            p[0] = NodeAST(AST.NUMBER, filhos)
+            filhos = ['FLOAT', NodeAST(AST.NUMBER, [str(p[1])])]
+            p[0] = NodeAST(AST.EXPRESSAO, filhos)
         else:
             if p[1] == 'nil':
                 filhos = ['NIL', p[1]]
                 p[0] = NodeAST(AST.EXPRESSAO, filhos)
             elif p[1][0] == '"':
-                p[0] = NodeAST(AST.STRING, p[1][1:-1])
+                filhos = ['STRING', NodeAST(AST.STRING, p[1][1:-1])]
+                p[0] = NodeAST(AST.EXPRESSAO, filhos)
             else:
-                p[0] = NodeAST(AST.IDENT, p[1])
+                filhos = ['IDENT', NodeAST(AST.IDENT, [p[1]])]
+                p[0] = NodeAST(AST.EXPRESSAO, filhos)
+
     elif len(p) == 3:
         if p[1] == '~':
             filhos = ['COMPLEM', p[1]]
@@ -380,17 +388,17 @@ def p_Exp(p):
             filhos = [p[2], p[1], p[3]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
     elif len(p) == 5:
-        filhos = ['IDENT', p[1], p[3]]
+        filhos = ['FUNC_CALL', NodeAST(AST.IDENT, [p[1]]), p[3]]
         p[0] = NodeAST(AST.EXPRESSAO, filhos)
     elif len(p) == 6:
         if p[1] == 'new':
-            filhos = ['NEW', p[2], p[4]]
+            filhos = ['NEW', NodeAST(AST.IDENT, [p[2]]), p[4]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
         else:
             filhos = ['COND', p[1], p[3], p[4]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
     elif len(p) == 7:
-        filhos = ['PONTEIRO', p[1], p[3], p[5]]
+        filhos = ['PONTEIRO', p[1],  NodeAST(AST.IDENT, [p[3]]), p[5]]
         p[0] = NodeAST(AST.EXPRESSAO, filhos)
 
 
@@ -406,20 +414,19 @@ def p_Argumentos(p):
     '''Argumentos : Argumentos VIRG Exp
                   | Exp '''
     if len(p) == 4:
-        filhos = p[1] + [p[3]]
+        filhos = p[1].filhos + [NodeAST(AST.EXPRESSAO, [p[3]])]
     else:
-        filhos = [p[1]]
-    p[0] = filhos
+        filhos = [NodeAST(AST.EXPRESSAO, [p[1]])]
+    p[0] = NodeAST(AST.ARGS, filhos)
 
 
 def p_EsqVal(p):
     '''EsqVal : IDENT ABRECOL Exp FECHACOL
               | IDENT '''
     if len(p) == 2:
-        p[0] = NodeAST(AST.IDENT, p[1])
+        p[0] = NodeAST(AST.IDENT, [p[1]])
     else:
-        ident = NodeAST(AST.IDENT, p[1])
-        p[0] = [ident, p[3]]
+        p[0] = NodeAST(AST.IDENT, [p[1], p[3]])
 
 
 def p_empty(p):

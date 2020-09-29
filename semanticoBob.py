@@ -19,32 +19,42 @@ class InterpretaAST:
     def __init__(self, tree):
         self.seed = 0
         self.tree = tree
-        self.graph = Digraph('G', filename='semantico.gv')
+        self.graph = Digraph('G', filename='rezamosMuito.gv')
         self.graph.attr(size='6,6')
 
     def __getID(self, nome):
         self.seed += 1
+        if not isinstance(nome, str):
+            print(nome.filhos)
+            print('sss')
         return 'i' + str(self.seed) + '__' + nome
 
     def constroiDicionario(self):
-        no1 = self.__getID('Programa')
+        nodo1 = self.__getID('Programa')
         no2 = self.__lerNo(self.tree)
-        self.graph.edge(no1, no2)
+        self.graph.edge(nodo1, no2)
 
     def __lerNo(self, subtree):
         g: NodeAST = subtree
+        if g == None :
+            return '-'
+        elif g == 'static' :
+            nodo = self.__getID('STATIC')
+            self.graph.edge(nodo, 'variavel')
+            return 'static'
+        elif g == 'nil' :
+            nodo = self.__getID('NIL')
+            self.graph.edge(nodo, 'variavel')
+            return 'nil'
         if g.tipo == AST.IDENT:
             nodo = self.__getID('IDENT')
             folha = self.__getID(g.filhos[0])
             self.graph.edge(nodo, folha)
             return nodo
         elif g.tipo == AST.NUMBER:
-            if g.filhos[0] == 'INT':
-                nodo = self.__getID('INT')
-                folha = self.__getID(g.filhos[1])
-            elif g.filhos[0] == 'FLOAT':
-                nodo = self.__getID('FLOAT')
-                folha = self.__getID(g.filhos[1])
+            print(f'bbbbbbbbb {g.filhos}')
+            nodo = self.__getID('NUMBER')
+            folha = self.__getID(g.filhos[0])
             self.graph.edge(nodo, folha)
             return nodo
         elif g.tipo == AST.STRING:
@@ -52,27 +62,124 @@ class InterpretaAST:
             folha = self.__getID(g.filhos[0])
             self.graph.edge(nodo, folha)
             return nodo
+        elif g.tipo == AST.LISTA_DEFINICAO:
+            nodo = self.__getID('DEFINICOES')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.CLASSE_DEF:
+            nodo = self.__getID('CLASSE')
+            for com in g.filhos:
+                print(com)
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.LISTA_MEMBROS:
+            nodo = self.__getID('MEMBROS')
+            for com in g.filhos:
+                print(com)
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.LISTA_VAR:
+            nodo = self.__getID('LISTA_VAR')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.MEMBRO_VAR:
+            nodo = self.__getID('VAR')
+            for com in g.filhos:
+                print(com)
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.MEMBRO_FUNC:
+            nodo = self.__getID('FUNC')
+            for com in g.filhos:
+                print(com)
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.FUNCAO_DEF:
+            nodo = self.__getID('FUNCAO')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.PARAMETROS:
+            nodo = self.__getID('PARAMETROS')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.ARGS:
+            nodo = self.__getID('ARGUMENTOS')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.LISTA_ARGS:
+            nodo = self.__getID('LISTA_ARGS')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
+        elif g.tipo == AST.LISTA_TEMP:
+            nodo = self.__getID('LISTA_TEMP')
+            for com in g.filhos:
+                nodoCom = self.__lerNo(com)
+                self.graph.edge(nodo, nodoCom)
+            return nodo
         elif g.tipo == AST.SEQ_COM:
             nodo = self.__getID('SEQ_COM')
             for com in g.filhos:
-                nodoCom = self.__lerNO(com)
+                nodoCom = self.__lerNo(com)
                 self.graph.edge(nodo, nodoCom)
             return nodo
         elif g.tipo == AST.COMANDO:
+            if len(g.filhos) == 1:
+                if g.filhos[0] == 'CONTINUE' or g.filhos[0] == 'BREAK':
+                    nodo = self.__getID(g.filhos[0])
+                    self.graph.edge(nodo, '-COMANDO')
+                    return g.filhos[0]
+                else:
+                    print(g.filhos[0].filhos[0])
+                    nodo = self.__getID(g.filhos[0].filhos[0])
+                    termo = self.__lerNo(g.filhos[0])
+                    self.graph.edge(nodo, termo)
+                    return nodo
             nodo = self.__getID(g.filhos[0])
             for x in g.filhos[1:]:
-                termo = self.__desenha(x)
+                termo = self.__lerNo(x)
                 self.graph.edge(nodo, termo)
             return nodo
         elif g.tipo == AST.EXPRESSAO:
-            nodo = self.__getID(g.filhos[0])
-            if g.filhos[0] == 'NUMBER' or g.filhos[0] == 'NUMBER':
-                folha = self.__getID(g.filhos[1])
-                self.graph.edge(nodo, folha)
+            if len(g.filhos) == 1:
+                nodo = self.__getID(g.filhos[0].filhos[0])
+                termo = self.__lerNo(g.filhos[0].filhos[1])
                 return nodo
+            nodo = self.__getID(g.filhos[0])
             for x in g.filhos[1:]:
-                termo = self.__desenha(x)
+                print(x)
+                termo = self.__lerNo(x)
                 self.graph.edge(nodo, termo)
             return nodo
         else:
+            print(g.tipo)
             raise TypeError('Tipo AST invalido')
+
+    def imprime(self):
+        self.graph.view()
+
+
+if __name__ == '__main__':
+    nomeArquivo = 'test_bob.txt'
+    arquivo = open(nomeArquivo, 'r')
+    text = arquivo.read()
+
+    result = parser.parse(text, lexer=lexer)
+    visao = InterpretaAST(result)
+    visao.constroiDicionario()
+    visao.imprime()
