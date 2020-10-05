@@ -25,8 +25,9 @@ class InterpretaAST:
     def __getID(self, nome):
         self.seed += 1
         if not isinstance(nome, str):
-            print(nome.filhos)
-            print('sss')
+            #print(nome.filhos)
+            #print('sss')
+            pass
         return 'i' + str(self.seed) + '__' + nome
 
     def constroiDicionario(self):
@@ -37,22 +38,20 @@ class InterpretaAST:
     def __lerNo(self, subtree):
         g: NodeAST = subtree
         if g == None :
-            return '-'
+            nodo = self.__getID('NONE')
+            return nodo
         elif g == 'static' :
             nodo = self.__getID('STATIC')
-            self.graph.edge(nodo, 'variavel')
-            return 'static'
+            return nodo
         elif g == 'nil' :
             nodo = self.__getID('NIL')
-            self.graph.edge(nodo, 'variavel')
-            return 'nil'
+            return nodo
         if g.tipo == AST.IDENT:
             nodo = self.__getID('IDENT')
             folha = self.__getID(g.filhos[0])
             self.graph.edge(nodo, folha)
             return nodo
         elif g.tipo == AST.NUMBER:
-            print(f'bbbbbbbbb {g.filhos}')
             nodo = self.__getID('NUMBER')
             folha = self.__getID(g.filhos[0])
             self.graph.edge(nodo, folha)
@@ -71,14 +70,14 @@ class InterpretaAST:
         elif g.tipo == AST.CLASSE_DEF:
             nodo = self.__getID('CLASSE')
             for com in g.filhos:
-                print(com)
+                #print(com)
                 nodoCom = self.__lerNo(com)
                 self.graph.edge(nodo, nodoCom)
             return nodo
         elif g.tipo == AST.LISTA_MEMBROS:
             nodo = self.__getID('MEMBROS')
             for com in g.filhos:
-                print(com)
+                #print(com)
                 nodoCom = self.__lerNo(com)
                 self.graph.edge(nodo, nodoCom)
             return nodo
@@ -91,14 +90,14 @@ class InterpretaAST:
         elif g.tipo == AST.MEMBRO_VAR:
             nodo = self.__getID('VAR')
             for com in g.filhos:
-                print(com)
+                #print(com)
                 nodoCom = self.__lerNo(com)
                 self.graph.edge(nodo, nodoCom)
             return nodo
         elif g.tipo == AST.MEMBRO_FUNC:
             nodo = self.__getID('FUNC')
             for com in g.filhos:
-                print(com)
+                #print(com)
                 nodoCom = self.__lerNo(com)
                 self.graph.edge(nodo, nodoCom)
             return nodo
@@ -145,7 +144,7 @@ class InterpretaAST:
                     self.graph.edge(nodo, '-COMANDO')
                     return g.filhos[0]
                 else:
-                    print(g.filhos[0].filhos[0])
+                    #print(g.filhos[0].filhos[0])
                     nodo = self.__getID(g.filhos[0].filhos[0])
                     termo = self.__lerNo(g.filhos[0])
                     self.graph.edge(nodo, termo)
@@ -158,16 +157,24 @@ class InterpretaAST:
         elif g.tipo == AST.EXPRESSAO:
             if len(g.filhos) == 1:
                 nodo = self.__getID(g.filhos[0].filhos[0])
-                termo = self.__lerNo(g.filhos[0].filhos[1])
+                termo = self.__getID(g.filhos[0].filhos[1].filhos[0])
+                #termo = self.__lerNo(g.filhos[0].filhos[1].filhos[0])
+                print(termo)
+                self.graph.edge(nodo, termo)
+                return nodo
+            if g.filhos[0] == 'STRING' or g.filhos[0] == 'IDENT':
+                nodo = self.__getID(g.filhos[0])
+                termo = self.__getID(g.filhos[1].filhos[0])
+                self.graph.edge(nodo, termo)
                 return nodo
             nodo = self.__getID(g.filhos[0])
             for x in g.filhos[1:]:
-                print(x)
+                #print(g.filhos)
                 termo = self.__lerNo(x)
                 self.graph.edge(nodo, termo)
             return nodo
         else:
-            print(g.tipo)
+            #print(g.tipo)
             raise TypeError('Tipo AST invalido')
 
     def imprime(self):

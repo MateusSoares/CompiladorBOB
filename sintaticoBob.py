@@ -334,7 +334,7 @@ def p_Exp(p):
                 filhos = ['NIL', p[1]]
                 p[0] = NodeAST(AST.EXPRESSAO, filhos)
             elif p[1][0] == '"':
-                filhos = ['STRING', NodeAST(AST.STRING, p[1][1:-1])]
+                filhos = ['STRING', NodeAST(AST.STRING, [p[1][1:-1]])]
                 p[0] = NodeAST(AST.EXPRESSAO, filhos)
             else:
                 filhos = ['IDENT', NodeAST(AST.IDENT, [p[1]])]
@@ -360,10 +360,10 @@ def p_Exp(p):
             filhos = ['DECREMEN', p[2]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
         elif p[1] == '+':
-            filhos = ['MAIS', p[1]]
+            filhos = ['MAIS', p[2]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
         elif p[1] == '-':
-            filhos = ['MENOS', p[1]]
+            filhos = ['MENOS', p[2]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
     elif len(p) == 4:
         if p[1] == '(':
