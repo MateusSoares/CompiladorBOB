@@ -159,7 +159,6 @@ class InterpretaAST:
                 nodo = self.__getID(g.filhos[0].filhos[0])
                 termo = self.__getID(g.filhos[0].filhos[1].filhos[0])
                 #termo = self.__lerNo(g.filhos[0].filhos[1].filhos[0])
-                print(termo)
                 self.graph.edge(nodo, termo)
                 return nodo
             if g.filhos[0] == 'STRING' or g.filhos[0] == 'IDENT':
@@ -168,8 +167,9 @@ class InterpretaAST:
                 self.graph.edge(nodo, termo)
                 return nodo
             nodo = self.__getID(g.filhos[0])
+            #print(nodo)
             for x in g.filhos[1:]:
-                #print(g.filhos)
+                #print(g.filhos[1].filhos)
                 termo = self.__lerNo(x)
                 self.graph.edge(nodo, termo)
             return nodo
@@ -181,12 +181,49 @@ class InterpretaAST:
         self.graph.view()
 
 
+def analisa_classe(raiz):
+
+    g  = raiz
+    buffer_hierarquia = list()
+
+    for com in g.filhos:
+        if com.tipo == AST.CLASSE_DEF:
+            h = com.filhos
+            classe_id = h[0].filhos[0]
+            classe_base = h[1]
+            if classe_base == None:
+                dic_aux = {classe_id: [None, list()]}
+            else:
+                classe_base = classe_base.filhos[0]
+                dic_aux = {classe_id: [classe_base, list()]}
+                buffer_hierarquia.append([classe_base, classe_id])
+            hierarquia_classe.update(dic_aux)
+    for com in buffer_hierarquia:
+        if com[0] in hierarquia_classe:
+            hierarquia_classe[com[0]][1].append(com[1])
+        else:
+            raise Exception(f'Classe {com[1]} herdando de uma classe inexistente: {com[0]}.')
+            exit()
+
+
+
+hierarquia_classe = dict()
+
+
+
 if __name__ == '__main__':
-    nomeArquivo = 'test_bob.txt'
+    nomeArquivo = 'test_bob_classe.txt'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 
     result = parser.parse(text, lexer=lexer)
+
+    analisa_classe(result)
+    print('oiiissss')
+    print(hierarquia_classe)
+
+    '''
     visao = InterpretaAST(result)
     visao.constroiDicionario()
     visao.imprime()
+    '''
