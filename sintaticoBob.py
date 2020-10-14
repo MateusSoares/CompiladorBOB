@@ -186,16 +186,14 @@ def p_DefinicaoFuncao(p):
     '''DefinicaoFuncao : DEF IDENT OPESCOPO IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco
                        | DEF IDENT ABREPAR ListaParametrosOpcionais FECHAPAR Bloco'''
     if len(p) == 9:
-        ident1 = NodeAST(AST.IDENT, [p[2]])
-        ident2 = NodeAST(AST.IDENT, [p[4]])
+        ident1 = NodeAST(AST.IDENT, [p[4]])
+        ident2 = NodeAST(AST.IDENT, [p[2]])
         filhos = [ident1, ident2, p[6], p[8]]
     else:
         ident = NodeAST(AST.IDENT, [p[2]])
         filhos = [ident, None, p[4], p[6]]
 
     p[0] = NodeAST(AST.FUNCAO_DEF, filhos)
-
-    print(filhos)
 
 
 def p_ListaParametrosOpcionais(p):

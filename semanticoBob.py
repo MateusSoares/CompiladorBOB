@@ -206,8 +206,42 @@ def analisa_classe(raiz):
             exit()
 
 
+def analisa_tabela_simbolos_funcao(raiz):
+
+    g = raiz
+
+
+
+    for com in g.filhos:
+        if com.tipo == AST.FUNCAO_DEF:
+            lista_parametros = list()
+            lista_var_temp = list()
+            h = com.filhos
+            funcao_id = h[0].filhos[0]
+            classe_id = h[1]
+            if classe_id != None:
+                classe_id = h[1].filhos[0]
+            j = h[2].filhos
+
+            parametros = j[0].filhos
+            for par in parametros:
+                lista_parametros.append(par.filhos)
+
+            var_temporarias = j[1].filhos
+            for var in var_temporarias:
+                lista_var_temp.append(var.filhos)
+
+            comandos = h[3]
+
+            dic_aux = {funcao_id: [classe_id, lista_parametros, lista_var_temp, comandos]}
+
+            funcao_tab_simbolos.update(dic_aux)
+
+
+
 
 hierarquia_classe = dict()
+funcao_tab_simbolos = dict()
 
 
 
@@ -218,11 +252,15 @@ if __name__ == '__main__':
 
     result = parser.parse(text, lexer=lexer)
 
+    analisa_tabela_simbolos_funcao(result)
+    print(funcao_tab_simbolos)
+
+    '''
     analisa_classe(result)
     print('oiiissss')
     print(hierarquia_classe)
 
-    '''
+    
     visao = InterpretaAST(result)
     visao.constroiDicionario()
     visao.imprime()
