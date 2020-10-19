@@ -238,10 +238,49 @@ def analisa_tabela_simbolos_funcao(raiz):
             funcao_tab_simbolos.update(dic_aux)
 
 
+def analisa_tabela_simbolos_classe(raiz):
 
+    g = raiz
+
+    for com in g.filhos:
+        if com.tipo == AST.CLASSE_DEF:
+            lista_var_classe = list()
+            lista_var_inst = list()
+            lista_met_classe = list()
+            lista_met_inst = list()
+            c = com.filhos
+            classe_id = c[0].filhos[0]
+            m = c[2].filhos
+            #j = m[0].filhos[0]
+            for mem in m:
+                if  mem.tipo == AST.MEMBRO_VAR:
+                    if mem.filhos[0] == 'static':
+                        for variav in mem.filhos[1].filhos:
+                            lista_var_classe.append(variav.filhos)
+                    else:
+                        for variav in mem.filhos[1].filhos:
+                            lista_var_inst.append(variav.filhos)
+                elif mem.tipo == AST.MEMBRO_FUNC:
+                    if mem.filhos[0] == 'static':
+                        lista_met_classe.append(mem.filhos[1].filhos)
+                    else:
+                        lista_met_inst.append(mem.filhos[1].filhos)
+
+
+
+
+
+
+            # static - variaveis de classe
+
+            dic_aux = {classe_id: [lista_var_classe,lista_var_inst , lista_met_classe, lista_met_inst]}
+            classe_tab_simbolos.update(dic_aux)
 
 hierarquia_classe = dict()
 funcao_tab_simbolos = dict()
+classe_tab_simbolos = dict()
+
+
 
 
 
@@ -253,7 +292,8 @@ if __name__ == '__main__':
     result = parser.parse(text, lexer=lexer)
 
     analisa_tabela_simbolos_funcao(result)
-    print(funcao_tab_simbolos)
+    analisa_tabela_simbolos_classe(result)
+    print(classe_tab_simbolos)
 
     '''
     analisa_classe(result)

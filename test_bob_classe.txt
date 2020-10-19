@@ -11,11 +11,11 @@ class Baskara:Portugues {
 }
 
 class Matematica {
-    static var instanciasCriadas;
-    var a, b[1], c;
+    static var instanciasCriadasC;
+    var x, y[1], z;
     static def inicializa();
-    def Baskara(a, b, c);
-    def calculaRaizes();
+    def BaskaraC(x, y, z);
+    def calculaRaizesC();
 }
 
 class Baskara2:Matematica {
