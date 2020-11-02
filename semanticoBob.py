@@ -180,125 +180,140 @@ class InterpretaAST:
     def imprime(self):
         self.graph.view()
 
+class Semantico:
 
-def analisa_classe(raiz):
+    def __init__(self, raiz):
 
-    g  = raiz
-    buffer_hierarquia = list()
+        self.raiz = raiz
+        self.hierarquia_classe = dict()
+        self.funcao_tab_simbolos = dict()
+        self.classe_tab_simbolos = dict()
 
-    for com in g.filhos:
-        if com.tipo == AST.CLASSE_DEF:
-            h = com.filhos
-            classe_id = h[0].filhos[0]
-            classe_base = h[1]
-            if classe_base == None:
-                dic_aux = {classe_id: [None, list()]}
+        self.analisa_ast()
+
+    def analisa_classe(self):
+
+        g = self.raiz
+        buffer_hierarquia = list()
+
+        for com in g.filhos:
+            if com.tipo == AST.CLASSE_DEF:
+                h = com.filhos
+                classe_id = h[0].filhos[0]
+                classe_base = h[1]
+                if classe_base == None:
+                    dic_aux = {classe_id: [None, list()]}
+                else:
+                    classe_base = classe_base.filhos[0]
+                    dic_aux = {classe_id: [classe_base, list()]}
+                    buffer_hierarquia.append([classe_base, classe_id])
+                self.hierarquia_classe.update(dic_aux)
+        for com in buffer_hierarquia:
+            if com[0] in hierarquia_classe:
+                hierarquia_classe[com[0]][1].append(com[1])
             else:
-                classe_base = classe_base.filhos[0]
-                dic_aux = {classe_id: [classe_base, list()]}
-                buffer_hierarquia.append([classe_base, classe_id])
-            hierarquia_classe.update(dic_aux)
-    for com in buffer_hierarquia:
-        if com[0] in hierarquia_classe:
-            hierarquia_classe[com[0]][1].append(com[1])
-        else:
-            raise Exception(f'Classe {com[1]} herdando de uma classe inexistente: {com[0]}.')
-            exit()
+                raise Exception(f'Classe {com[1]} herdando de uma classe inexistente: {com[0]}.')
+                exit()
 
 
-def analisa_tabela_simbolos_funcao(raiz):
+    def analisa_tabela_simbolos_funcao(self):
 
-    g = raiz
+        g = self.raiz
 
+        for com in g.filhos:
+            if com.tipo == AST.FUNCAO_DEF:
+                lista_parametros = list()
+                lista_var_temp = list()
+                h = com.filhos
+                funcao_id = h[0].filhos[0]
+                classe_id = h[1]
+                if classe_id != None:
+                    classe_id = h[1].filhos[0]
+                j = h[2].filhos
 
+                parametros = j[0].filhos
+                for par in parametros:
+                    lista_parametros.append(par.filhos)
 
-    for com in g.filhos:
-        if com.tipo == AST.FUNCAO_DEF:
-            lista_parametros = list()
-            lista_var_temp = list()
-            h = com.filhos
-            funcao_id = h[0].filhos[0]
-            classe_id = h[1]
-            if classe_id != None:
-                classe_id = h[1].filhos[0]
-            j = h[2].filhos
+                var_temporarias = j[1].filhos
+                for var in var_temporarias:
+                    lista_var_temp.append(var.filhos)
 
-            parametros = j[0].filhos
-            for par in parametros:
-                lista_parametros.append(par.filhos)
+                comandos = h[3]
 
-            var_temporarias = j[1].filhos
-            for var in var_temporarias:
-                lista_var_temp.append(var.filhos)
+                dic_aux = {funcao_id: [classe_id, lista_parametros, lista_var_temp, comandos]}
 
-            comandos = h[3]
-
-            dic_aux = {funcao_id: [classe_id, lista_parametros, lista_var_temp, comandos]}
-
-            funcao_tab_simbolos.update(dic_aux)
+                self.funcao_tab_simbolos.update(dic_aux)
 
 
-def analisa_tabela_simbolos_classe(raiz):
+    def analisa_tabela_simbolos_classe(self):
 
-    g = raiz
+        g = self.raiz
 
-    for com in g.filhos:
-        if com.tipo == AST.CLASSE_DEF:
-            lista_var_classe = list()
-            lista_var_inst = list()
-            lista_met_classe = list()
-            lista_met_inst = list()
-            c = com.filhos
-            classe_id = c[0].filhos[0]
-            m = c[2].filhos
-            #j = m[0].filhos[0]
-            for mem in m:
-                if  mem.tipo == AST.MEMBRO_VAR:
-                    if mem.filhos[0] == 'static':
-                        for variav in mem.filhos[1].filhos:
-                            lista_var_classe.append(variav.filhos)
-                    else:
-                        for variav in mem.filhos[1].filhos:
-                            lista_var_inst.append(variav.filhos)
-                elif mem.tipo == AST.MEMBRO_FUNC:
-                    if mem.filhos[0] == 'static':
-                        lista_met_classe.append(mem.filhos[1].filhos)
-                    else:
-                        lista_met_inst.append(mem.filhos[1].filhos)
+        for com in g.filhos:
+            if com.tipo == AST.CLASSE_DEF:
+                lista_var_classe = list()
+                lista_var_inst = list()
+                lista_met_classe = list()
+                lista_met_inst = list()
+                c = com.filhos
+                classe_id = c[0].filhos[0]
+                m = c[2].filhos
+                #j = m[0].filhos[0]
+                for mem in m:
+                    if  mem.tipo == AST.MEMBRO_VAR:
+                        if mem.filhos[0] == 'static':
+                            for variav in mem.filhos[1].filhos:
+                                lista_var_classe.append(variav.filhos)
+                        else:
+                            for variav in mem.filhos[1].filhos:
+                                lista_var_inst.append(variav.filhos)
+                    elif mem.tipo == AST.MEMBRO_FUNC:
+                        if mem.filhos[0] == 'static':
+                            lista_met_classe.append(mem.filhos[1].filhos)
+                        else:
+                            lista_met_inst.append(mem.filhos[1].filhos)
+
+                # static - variaveis de classe
+
+                dic_aux = {classe_id: [lista_var_classe, lista_var_inst, lista_met_classe, lista_met_inst]}
+                self.classe_tab_simbolos.update(dic_aux)
+
+    def analisa_ast(self):
+
+        self.analisa_classe()
+        self.analisa_tabela_simbolos_classe()
+        self.analisa_tabela_simbolos_funcao()
 
 
-
-
-
-
-            # static - variaveis de classe
-
-            dic_aux = {classe_id: [lista_var_classe,lista_var_inst , lista_met_classe, lista_met_inst]}
-            classe_tab_simbolos.update(dic_aux)
-
-hierarquia_classe = dict()
-funcao_tab_simbolos = dict()
-classe_tab_simbolos = dict()
 
 
 
 
 
 if __name__ == '__main__':
-    nomeArquivo = 'test_bob_classe.txt'
+    nomeArquivo = 'test_bob.txt'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 
     result = parser.parse(text, lexer=lexer)
 
-    analisa_tabela_simbolos_funcao(result)
-    analisa_tabela_simbolos_classe(result)
-    print(classe_tab_simbolos)
+    sem = Semantico(result)
+
 
     '''
+    analisa_ast(result)
+    #analisa_tabela_simbolos_funcao(result)
+    #analisa_tabela_simbolos_classe(result)
+    print(funcao_tab_simbolos)
+    print(classe_tab_simbolos)
+    print(hierarquia_classe)
+
+
+    
     analisa_classe(result)
     print('oiiissss')
-    print(hierarquia_classe)
+    
 
     
     visao = InterpretaAST(result)
