@@ -14,3 +14,7 @@ if __name__ == '__main__':
 
     amb = Ambiente(sem.classe_tab_simbolos, sem.funcao_tab_simbolos, sem.hierarquia_classe)
 
+    amb['c'] = ['z', 'int', '9']
+
+    print(amb)
+

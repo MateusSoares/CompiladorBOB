@@ -1,4 +1,6 @@
 import copy as cp
+
+
 class Ambiente:
 
     def __init__(self, dic_classe, dic_func, dic_hierarquia):
@@ -9,6 +11,7 @@ class Ambiente:
 
         struct da pilha:
         [nome_da_funcao, nome_classe, funcao_static, dict_variaveis, dic_instancia, var_de_retorno]
+
         '''
         #pilha de ambiente
         self.ambiente = list()
@@ -28,7 +31,6 @@ class Ambiente:
         self.set_function('Baskara', None, [['x', 'int', '3'], ['y', 'int', '5'], ['y', 'int', '5']])
 
         self.__setitem__('x', ['var', 'int', '5'])
-        print(self.ambiente)
 
     def __setitem__(self, key, value):
 
@@ -42,14 +44,18 @@ class Ambiente:
             return
 
         #caso seja uma funcao static
-        if self.ambiente[2] == True:
-            pass
+        if env[2] == True:
+            if key in self.ambiente_classe:
+                self.ambiente_classe[key] = value
+            return
 
         #caso seja uma funcao de classe
-        if self.ambiente[1] is not None:
-            pass
+        if env[1] is not None:
+            if key in env[4]:
+                env[4][key] = value
+            return
 
-        pass
+        raise Exception('Não existe a variável no ambiente atual.')
 
     def _init_ambiente(self):
 
@@ -104,9 +110,25 @@ class Ambiente:
                     self.ambiente_instancia[classe_name].update(aux)
                 super_class = self.dic_hierarquia[super_class][0]
 
-    def get_value(self):
+    def get_value(self, key):
 
-        pass
+        env = self.ambiente[-1]
+
+        # caso esteja no ambiente local
+        if key in env[3]:
+            return env[3][key]
+
+        # caso seja uma funcao static
+        if env[2] == True:
+            if key in self.ambiente_classe:
+                return self.ambiente_classe[key]
+
+        # caso seja uma funcao de classe
+        if env[1] is not None:
+            if key in env[4]:
+                return env[4][key]
+
+        raise Exception('Não existe a variável no ambiente atual.')
 
     def set_function(self, name_function, retorno, lista_argumentos):
 
@@ -196,6 +218,7 @@ class Ambiente:
 
             variaveis = dict()
             var_instancia = dict()
+            funcao_static = None
 
             if classe_valor is not None:
                 # verifica se funcao e static
@@ -237,18 +260,38 @@ class Ambiente:
 
         pass
 
-    def get_return_function(self):
+    def get_return_function(self, value):
 
         #caso o nome da classe for igual ao nome da funcao retornar o obj
-        pass
+        env = self.ambiente[-1]
+        if env[0] == env[1]:
+            valor = cp.copy(env[4])
+            var_retorno = env[-1]
+            self.ambiente.pop()
+            env = self.ambiente[-1]
+            env[3][var_retorno] = valor
+            return
+
+        #caso tenha algo para retornar seta no ambiente anterior o recebido por parametro
+        if env[-1] is not None:
+            var_retorno = env[-1]
+            self.ambiente.pop()
+            env = self.ambiente[-1]
+            env[3][var_retorno] = value
+            return
+
+        #caso não tenha o que retornar somente desempilha o ambiente
+        self.ambiente.pop()
 
     def get_function_name(self):
 
-        pass
+        env = self.ambiente[-1]
+        return env[1]
 
+    def __str__(self):
+
+        return str(self.ambiente[-1])
 
 if __name__ == '__main__':
-
-
 
     print('alou')
