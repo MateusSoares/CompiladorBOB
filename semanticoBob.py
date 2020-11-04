@@ -19,7 +19,7 @@ class InterpretaAST:
     def __init__(self, tree):
         self.seed = 0
         self.tree = tree
-        self.graph = Digraph('G', filename='rezamosMuito.gv')
+        self.graph = Digraph('G', filename='rezamos.gv')
         self.graph.attr(size='6,6')
 
     def __getID(self, nome):
@@ -209,8 +209,8 @@ class Semantico:
                     buffer_hierarquia.append([classe_base, classe_id])
                 self.hierarquia_classe.update(dic_aux)
         for com in buffer_hierarquia:
-            if com[0] in hierarquia_classe:
-                hierarquia_classe[com[0]][1].append(com[1])
+            if com[0] in self.hierarquia_classe:
+                self.hierarquia_classe[com[0]][1].append(com[1])
             else:
                 raise Exception(f'Classe {com[1]} herdando de uma classe inexistente: {com[0]}.')
                 exit()
@@ -313,6 +313,7 @@ if __name__ == '__main__':
     
     analisa_classe(result)
     print('oiiissss')
+    
     
 
     

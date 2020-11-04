@@ -12,5 +12,5 @@ if __name__ == '__main__':
 
     sem = Semantico(result)
 
-    amb = Ambiente(sem.classe_tab_simbolos, sem.funcao_tab_simbolos)
+    amb = Ambiente(sem.classe_tab_simbolos, sem.funcao_tab_simbolos, sem.hierarquia_classe)
 

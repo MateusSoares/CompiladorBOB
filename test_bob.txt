@@ -4,17 +4,20 @@
 
 class Baskara {
     static var instanciasCriadas;
-    var a, b[1], c;
+    var a, b[3], c;
     static def inicializa();
     def Baskara(a, b, c);
     def calculaRaizes();
+}
+
+class Teste:Baskara {
 }
 
 def Baskara::inicializa() {
     instanciasCriadas = 0;
 }
 
-def main (; a, b, c) {
+def main (; a, b, c, func) {
      Baskara->inicializa();
 
      a = scanf("float");
