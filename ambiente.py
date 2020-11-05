@@ -26,11 +26,6 @@ class Ambiente:
         self.dic_hierarquia = dic_hierarquia
 
         self._init_ambiente()
-        self.set_function('main', None, [])
-        self.set_function('inicializa', None, ['func'])
-        self.set_function('Baskara', None, [['x', 'int', '3'], ['y', 'int', '5'], ['y', 'int', '5']])
-
-        self.__setitem__('x', ['var', 'int', '5'])
 
     def __setitem__(self, key, value):
 
@@ -133,6 +128,32 @@ class Ambiente:
     def set_function(self, name_function, retorno, lista_argumentos):
 
         if name_function not in self.dic_func:
+
+            if name_function == 'print':
+                string_comp = ''
+                for i in lista_argumentos:
+                    if len(i) == 3:
+                        string_comp += str(i[2])
+                        continue
+                    elif len(i) == 4:
+                        string_comp += str(i[2][3])
+                        continue
+                    string_comp += i
+                print(string_comp)
+                return
+            elif name_function == 'scanf':
+                string_comp = ''
+                for i in lista_argumentos:
+                    if len(i) == 3:
+                        string_comp += str(i[3])
+                        continue
+                    elif len(i) == 4:
+                        string_comp += str(i[3][4])
+                        continue
+                    string_comp += i
+                print(string_comp)
+                return eval(input())
+
             raise Exception(f'Funcao nao encontrada: {name_function}')
 
 

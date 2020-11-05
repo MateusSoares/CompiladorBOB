@@ -1,0 +1,36 @@
+class Soma {
+
+    var a, b, result;
+
+    def calcula();
+
+    def Soma(x,y);
+
+}
+
+def Soma::Soma(x,y) {
+
+    a = x ;
+    b = y ;
+
+}
+
+def Soma::calcula() {
+
+    result = a + b ;
+
+    return result;
+
+}
+
+def main (; x, y, resultado, soma) {
+
+    x = scanf("Insira o primeiro numero: ");
+    y = scanf("Insira o segundo numero : ");
+
+    soma = Soma(x, y);
+    resultado = soma->calcula();
+
+    print("O resultado é: ", resultado);
+
+}
