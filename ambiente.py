@@ -307,7 +307,7 @@ class Ambiente:
     def get_function_name(self):
 
         env = self.ambiente[-1]
-        return env[1]
+        return env[0]
 
     def __str__(self):
 
