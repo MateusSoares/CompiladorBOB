@@ -145,10 +145,10 @@ class Ambiente:
                 string_comp = ''
                 for i in lista_argumentos:
                     if len(i) == 3:
-                        string_comp += str(i[3])
+                        string_comp += str(i[2])
                         continue
                     elif len(i) == 4:
-                        string_comp += str(i[3][4])
+                        string_comp += str(i[2][3])
                         continue
                     string_comp += i
                 print(string_comp)
