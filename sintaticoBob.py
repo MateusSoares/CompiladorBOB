@@ -386,7 +386,10 @@ def p_Exp(p):
             filhos = [p[2], p[1], p[3]]
             p[0] = NodeAST(AST.EXPRESSAO, filhos)
     elif len(p) == 5:
-        filhos = ['FUNC_CALL', NodeAST(AST.IDENT, [p[1]]), p[3]]
+        if p[2] == '[':
+            filhos = ['VETOR', NodeAST(AST.IDENT, [p[1]]), p[3]]
+        else:
+            filhos = ['FUNC_CALL', NodeAST(AST.IDENT, [p[1]]), p[3]]
         p[0] = NodeAST(AST.EXPRESSAO, filhos)
     elif len(p) == 6:
         if p[1] == 'new':
