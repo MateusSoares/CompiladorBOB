@@ -19,7 +19,7 @@ class InterpretaAST:
     def __init__(self, tree):
         self.seed = 0
         self.tree = tree
-        self.graph = Digraph('G', filename='rezamosSoma.gv')
+        self.graph = Digraph('G', filename='sort.gv')
         self.graph.attr(size='6,6')
 
     def __getID(self, nome):
@@ -292,7 +292,7 @@ class Semantico:
 
 
 if __name__ == '__main__':
-    nomeArquivo = 'teste_1_soma.bob'
+    nomeArquivo = 'teste_2_sort.bob'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 
@@ -300,6 +300,9 @@ if __name__ == '__main__':
 
     sem = Semantico(result)
 
+    visao = InterpretaAST(result)
+    visao.constroiDicionario()
+    visao.imprime()
 
     '''
     analisa_ast(result)

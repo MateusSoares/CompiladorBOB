@@ -1,0 +1,54 @@
+class Vetor {
+
+    var vet[5] ;
+
+    def Vetor(a, b, c, d, e);
+
+    def ordena();
+
+    def printaVetor();
+
+}
+
+def Vetor::Vetor(a, b, c, d, e) {
+
+    vet[0] = a ;
+    vet[1] = b ;
+    vet[2] = c ;
+    vet[3] = d ;
+    vet[4] = e ;
+
+}
+
+def Vetor::ordena(; i, j, aux) {
+
+    i = 0 ;
+    for (i; i < 4; i += 1) {
+        for (j = i + 1; j < 5; j += 1) {
+            if ( vet[j] < vet[i] ) {
+                aux = vet[i] ;
+                vet[i] = vet[j] ;
+                vet[j] = aux ;
+            }
+
+        }
+    }
+
+}
+
+def Vetor::printVetor(; cont) {
+
+    cont = 0 ;
+    while ( cont < 5 ) {
+        print(vet[cont], " - ");
+    }
+
+}
+
+def main(; vetor) {
+
+    vetor = Vetor(5,2,3,1,4) ;
+    vetor->ordena();
+    vetor->print();
+
+}
