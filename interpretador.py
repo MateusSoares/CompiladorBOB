@@ -5,21 +5,99 @@ from lexicoBob import tokens, lexer
 from ambiente import Ambiente
 
 
+def castVar(aux):
+    if aux[1] == 'int':
+        return int(aux[2])
+    elif aux[1] == 'float':
+        return float(aux[2])
+    else:
+        return aux[2]
+
+def comparador(sinal, aux1, aux2):
+    if sinal == '<':
+        #print('LT')
+        return aux1 < aux2
+    elif sinal == '>':
+        #print('GT')
+        return aux1 > aux2
+    elif sinal == '<=':
+        #print('LE')
+        return aux1 <= aux2
+    elif sinal == '>=':
+        #print('GE')
+        return aux1 >= aux2
+    elif sinal == '==':
+        #print('EQ')
+        return aux1 == aux2
+
+def tipoVarRet(tipoop1, tipoop2, op1, op2):
+    if tipoop1 == 'IDENT':
+        aux1 = ambiente.get_value(op1)
+        aux1 = castVar(aux1)
+    elif tipoop1 == 'INT':
+        aux1 = int(op1)
+    elif tipoop1 == 'FLOAT':
+        aux1 = float(op1)
+    elif tipoop1 == 'STRING':
+        aux1 = str(op1)
+    if tipoop2 == 'IDENT':
+        aux2 = ambiente.get_value(op2)
+        aux2 = castVar(aux2)
+    elif tipoop2 == 'INT':
+        aux2 = int(op2)
+    elif tipoop2 == 'FLOAT':
+        aux2 = float(op2)
+    elif tipoop2 == 'STRING':
+        aux2 = str(op2)
+
+    return aux1,aux2
+
+
+def executaEnquanto(com):
+    op1 = com[1].filhos[1].filhos[1].filhos[0]
+    op2 = com[1].filhos[2].filhos[1].filhos[0]
+    tipoop1 = com[1].filhos[1].filhos[0]
+    tipoop2 = com[1].filhos[2].filhos[0]
+    novaSeqCom = com[2]
+    sinal = com[1].filhos[0]
+
+    aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
+
+    comp = comparador(sinal,aux1,aux2)
+
+    while(comp):
+        executa(novaSeqCom)
+        aux1,aux2 = tipoVarRet(tipoop1,tipoop2,op1,op2)
+        comp = comparador(sinal, aux1, aux2)
+
+
+def executaPara(com):
+    #Atribuicao
+    executaExp(com[1].filhos)
+    # Condicao
+    op1 = com[2].filhos[1].filhos[1].filhos[0]
+    op2 = com[2].filhos[2].filhos[1].filhos[0]
+    tipoop1 = com[2].filhos[1].filhos[0]
+    tipoop2 = com[2].filhos[2].filhos[0]
+    novaSeqCom = com[4]
+    sinal = com[2].filhos[0]
+
+    aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
+
+
+    comp = comparador(sinal, aux1, aux2)
 
 
 
-def executa(ast):
-    arv = ast
 
-    for op in arv.filhos:
-        if op.tipo == AST.COMANDO:
-            for com in op.filhos:
-                if isinstance(com,sintaticoBob.NodeAST):
-                    if com.tipo == AST.EXPRESSAO:
-                        executaExp(com.filhos)
-                elif com == 'RETURN':
-                    variavelRet = op.filhos[1].filhos[1].filhos[0]
-                    ret = ambiente.get_return_function(ambiente.get_value(variavelRet))
+
+    while (comp):
+        executa(novaSeqCom)
+        # incremento
+        executaExp(com[3].filhos)
+        #att variaveis
+        aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
+        comp = comparador(sinal, aux1, aux2)
 
 
 
@@ -27,12 +105,61 @@ def executaMain(ast):
     arv = ast
 
     for op in arv.filhos:
+
         if op.tipo == AST.COMANDO:
-            for com in op.filhos:
-                if com.tipo == AST.EXPRESSAO:
-                    executaExp(com.filhos)
+            if len(op.filhos) == 1:
+                executaExp(op.filhos[0].filhos)
+            elif op.filhos[0] == 'IF':
+                executaCond(op.filhos)
+            elif op.filhos[0] == 'WHILE':
+                executaEnquanto(op.filhos)
+            elif op.filhos[0] == 'FOR':
+                executaPara(op.filhos)
+            else:
+                pass
+
 
     ambiente.get_return_function(None)
+
+def executa(ast):
+    arv = ast
+
+    for op in arv.filhos:
+        if op.tipo == AST.COMANDO:
+            if len(op.filhos) == 1:
+                executaExp(op.filhos[0].filhos)
+            elif op.filhos[0] == 'RETURN':
+                variavelRet = op.filhos[1].filhos[1].filhos[0]
+                ret = ambiente.get_return_function(ambiente.get_value(variavelRet))
+            elif op.filhos[0] == 'IF':
+                executaCond(op.filhos)
+            elif op.filhos[0] == 'WHILE':
+                executaEnquanto(op.filhos)
+            elif op.filhos[0] == 'FOR':
+                executaPara(op.filhos)
+            else:
+                pass
+
+
+def executaCond(op):
+    op1 = op[1].filhos[1].filhos[1].filhos[0]
+    op2 = op[1].filhos[2].filhos[1].filhos[0]
+    tipoop1 = op[1].filhos[1].filhos[0]
+    tipoop2 = op[1].filhos[2].filhos[0]
+    novaSeqCom = op[2]
+    sinal = op[1].filhos[0]
+
+    aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
+
+    comp = comparador(sinal,aux1,aux2)
+
+    if comp == True:
+        executa(novaSeqCom)
+    elif len(op) == 4:
+        if op[3].filhos[0] == 'IF':
+            executaCond(op[3].filhos)
+        else:
+            executa(op[3])
 
 
 def executaAritimeticas(exp):
@@ -103,16 +230,59 @@ def executaAritimeticas(exp):
             return int(val1[0])
 
 
+def setValor(tipo, valor):
+    if tipo == 'IDENT':
+        aux1 = ambiente.get_value(valor)
+        aux1 = castVar(aux1)
+    elif tipo == 'INT':
+        aux1 = int(valor)
+    elif tipo == 'FLOAT':
+        aux1 = float(valor)
+    elif tipo == 'STRING':
+        aux1 = str(valor)
+
+
+    return aux1
+
+
+def atribVetor(exp):
+    #print(exp)
+    #nome do vetor
+    pos1 = exp[1].filhos[0]
+    #tipo do dado atribuido, ID, INT, etc
+    tipo = exp[2].filhos[0]
+    #index do vetor
+    index = exp[1].filhos[1].filhos[1].filhos
+    index = int(index[0])
+    #valor que a posicao do vetor vai assumir
+    valor = exp[2].filhos[1].filhos[0]
+    #busca vetor que ja foi declarado no ambiente
+    vet = ambiente.get_value(pos1)
+    #tamanho do vetor
+    tam_vet = vet[1]
+
+    vet[2][index] = setValor(tipo, valor)
+    tup = ['vetor', tam_vet, vet[2]]
+    ambiente[pos1] = tup
+
+
+
+
+
+
+
+
+
 
 def executaExp(exp):
-    #print(exp)
+    print(exp)
     #print(ambiente.get_function_name())
     if exp[0] == 'ATRIB':
         pos1 = exp[1].filhos[0]
         pos2 = exp[2].filhos[0]
+        #Tratamento Vetor
         if len(exp[1].filhos) == 2:
-            print(exp[1].filhos[1].filhos[1].filhos)
-        #print(exp[2].filhos)
+            atribVetor(exp)
         elif pos2 == 'FUNC_CALL':
             listaArgs = list()
             pos0 = exp[2].filhos[1].filhos[0]
@@ -144,7 +314,7 @@ def executaExp(exp):
                     ambiente[pos1] = ['var', 'string', setF]
                 elif isinstance(setF, sintaticoBob.NodeAST):
                     executa(setF)
-                    if pos0.lower() == pos1.lower() :
+                    if pos0 == ambiente.get_class_name():
                         ambiente.get_return_function(None)
                     else:
                         ambiente.get_return_function(ambiente.get_value(pos1))
@@ -246,12 +416,17 @@ def executaExp(exp):
 
 
         ambiente.set_function(pos2, None , listaArgs)
+    elif exp[0] == '<':
+        print(exp[1].filhos[1].filhos)
+        pass
 
 
 
 if __name__ == '__main__':
-    #nomeArquivo = 'test_bob_classe.txt'
-    nomeArquivo = 'teste_1_soma.bob'
+    #nomeArquivo = 'teste_1_soma.bob'
+    #nomeArquivo = 'testebasico.txt'
+    nomeArquivo = 'testeVetor.txt'
+    #nomeArquivo = 'teste_2_sort.bob'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 

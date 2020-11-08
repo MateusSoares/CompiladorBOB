@@ -1,36 +1,42 @@
-class Soma {
 
-    var a, b, result;
+def main (; a , b , z, i, j) {
 
-    def calcula();
+    a = 3;
+    b = 5;
+    z = 2;
 
-    def Soma(x,y);
+    while (a <= b){
+        print("a vale: ", a);
 
-}
+        if ( a < b ) {
+            print("A Menor: ");
+        }
+        else if ( a > b ) {
+            print("A Maior: ");
+        }
+        else {
+            print("Iguais: ");
+        }
 
-def Soma::Soma(x,y) {
+        a = a + 1;
+    }
 
-    a = x ;
-    b = y ;
+    if ( a < b ) {
+        print("A Menor: ");
+    }
+    else if ( a > b ) {
+        print("A Maior: ");
+    }
+    else {
+        print("Iguais: ");
+    }
 
-}
 
-def Soma::calcula() {
-
-    result = a + b ;
-
-    return result;
-
-}
-
-def main (; x, y, resultado, soma) {
-
-    x = scanf("Insira o primeiro numero: ");
-    y = scanf("Insira o segundo numero : ");
-
-    soma = Soma(x, y);
-    resultado = soma->calcula();
-
-    print("O resultado é: ", resultado);
+    for (i = 0 ; i < 4; i = i + 1) {
+        if ( i == z ) {
+            print("Isso Aí Fera");
+        }
+        print(i);
+    }
 
 }

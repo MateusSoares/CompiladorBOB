@@ -309,6 +309,11 @@ class Ambiente:
         env = self.ambiente[-1]
         return env[0]
 
+    def get_class_name(self):
+
+        env = self.ambiente[-1]
+        return env[1]
+
     def __str__(self):
 
         return str(self.ambiente[-1])
