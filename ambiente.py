@@ -212,10 +212,7 @@ class Ambiente:
             if valor[2] != []:
                 for var in valor[2]:
                     aux = None
-                    if len(var) == 1:
-                        aux = {var: ['var', None, None]}
-                    else:
-                        aux = {var[0]: ['vetor', var[1], [None for i in range(0, var[1])]]}
+                    aux = {var: ['var', None, None]}
                     variaveis.update(aux)
 
             tupla = [name_function, nome_classe, funcao_static, variaveis, var_instancia, retorno]
