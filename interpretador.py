@@ -592,10 +592,10 @@ def executaExp(exp):
 
 
 if __name__ == '__main__':
-    #nomeArquivo = 'teste_1_soma.bob'
+    nomeArquivo = 'teste_1_soma.bob'
     #nomeArquivo = 'testeCondRepet.txt'
     #nomeArquivo = 'testeVetor.txt'
-    nomeArquivo = 'teste_2_sort.bob'
+    #nomeArquivo = 'teste_2_sort.bob'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 

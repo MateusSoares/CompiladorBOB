@@ -304,22 +304,9 @@ if __name__ == '__main__':
     visao.constroiDicionario()
     visao.imprime()
 
-    '''
-    analisa_ast(result)
-    #analisa_tabela_simbolos_funcao(result)
-    #analisa_tabela_simbolos_classe(result)
-    print(funcao_tab_simbolos)
-    print(classe_tab_simbolos)
-    print(hierarquia_classe)
+
+    print(sem.funcao_tab_simbolos)
+    print(sem.classe_tab_simbolos)
+    print(sem.hierarquia_classe)
 
 
-    
-    analisa_classe(result)
-    print('oiiissss')
-    
-    
-
-    '''
-    visao = InterpretaAST(result)
-    visao.constroiDicionario()
-    visao.imprime()

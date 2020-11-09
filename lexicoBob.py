@@ -189,7 +189,7 @@ lexer = lex.lex()
 
 if __name__ == '__main__':
 
-    nomeArquivo = 'test_lex.txt'
+    nomeArquivo = 'teste_2_sort.bob'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 
