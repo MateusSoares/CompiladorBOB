@@ -130,7 +130,6 @@ def executaMain(ast):
     arv = ast
 
     for op in arv.filhos:
-
         if op.tipo == AST.COMANDO:
             if len(op.filhos) == 1:
                 executaExp(op.filhos[0].filhos)
@@ -187,6 +186,7 @@ def tipoValorVetor(tipoInd, op1, index ):
     return tipoop1,valor
 
 def executaCond(op):
+    #print(op)
     op1 = op[1].filhos[1].filhos[1].filhos[0]
     op2 = op[1].filhos[2].filhos[1].filhos[0]
     tipoop1 = op[1].filhos[1].filhos[0]
@@ -297,28 +297,32 @@ def setValor(tipo, valor):
         aux1 = float(valor)
     elif tipo == 'STRING':
         aux1 = str(valor)
-
-
     return aux1
 
 
+
+
+
 def atribVetor(exp):
-    #print(exp)
     #nome do vetor
     pos1 = exp[1].filhos[0]
     #tipo do dado atribuido, ID, INT, etc
     tipo = exp[2].filhos[0]
     #index do vetor
-    index = exp[1].filhos[1].filhos[1].filhos
-    index = int(index[0])
+    tipoindex = exp[1].filhos[1].filhos[0]
+    index = exp[1].filhos[1].filhos[1].filhos[0]
+    if tipoindex == 'IDENT':
+        index = ambiente.get_value(index)
+        index = index[2]
+    #print(index)
+    index = int(index)
     #valor que a posicao do vetor vai assumir
     valor = exp[2].filhos[1].filhos[0]
     #busca vetor que ja foi declarado no ambiente
     vet = ambiente.get_value(pos1)
     #tamanho do vetor
     tam_vet = vet[1]
-
-
+    #se vetor recebe vetor
     if tipo == 'VETOR':
         vetAux = ambiente.get_value(valor)
         tipo2 = exp[2].filhos[2].filhos[0]
@@ -328,10 +332,16 @@ def atribVetor(exp):
             index2 = int(index2)
         else:
             index2 = ambiente.get_value(exp[2].filhos[2].filhos[1].filhos[0])
-            index2 = int(index2)
+            index2 = int(index2[2])
         vet[2][index] = vetAux[2][index2]
+
+    #Se Vetor Recebe Funcao
+    elif tipo == 'FUNC_CALL':
+        print("Ainda nao implemntado")
+    #se vetor recebe variaveis
     else:
         vet[2][index] = setValor(tipo, valor)
+
     tup = ['vetor', tam_vet, vet[2]]
     ambiente[pos1] = tup
 
@@ -395,7 +405,8 @@ def executaExp(exp):
                     if pos0 == ambiente.get_class_name():
                         ambiente.get_return_function(None)
                     else:
-                        ambiente.get_return_function(ambiente.get_value(pos1))
+                        pass
+                        #ambiente.get_return_function(ambiente.get_value(pos1))
 
 
         elif pos2 == 'INT':
@@ -419,7 +430,7 @@ def executaExp(exp):
                 index = int(index)
             else:
                 index = ambiente.get_value(exp[2].filhos[2].filhos[1].filhos[0])
-                index = int(index)
+                index = int(index[2])
 
             if isinstance(valor[2][index], int):
                 tup = ['var','int', valor[2][index]]
@@ -509,8 +520,7 @@ def executaExp(exp):
             if type(setF) is not sintaticoBob.NodeAST:
                 ambiente[pos1] = ['var', 'string', setF]
             elif isinstance(setF,sintaticoBob.NodeAST):
-                executa(setF)
-                ambiente.get_return_function(ambiente.get_value(pos1))
+                executaMain(setF)
 
     elif exp[0] == 'PONTEIRO':
         listaArgs = list()
@@ -544,10 +554,10 @@ def executaExp(exp):
                     valor = ambiente.get_value(variav)
                     listaArgs.append(valor)
 
-
+        #print(listaArgs)
         res = ambiente.set_function(apontado, None , listaArgs)
         #print(res.tipo)
-        executa(res)
+        executaMain(res)
 
     elif exp[0] == 'ATRIBCOMP' or exp[0] == 'MENOSCOMP':
         variav = exp[1].filhos[0]
@@ -576,16 +586,16 @@ def executaExp(exp):
 
 
     else :
-        print('ola')
+        print('Nao Implementado ainda')
         pass
 
 
 
 if __name__ == '__main__':
     #nomeArquivo = 'teste_1_soma.bob'
-    nomeArquivo = 'testeCondRepet.txt'
+    #nomeArquivo = 'testeCondRepet.txt'
     #nomeArquivo = 'testeVetor.txt'
-    #nomeArquivo = 'teste_2_sort.bob'
+    nomeArquivo = 'teste_2_sort.bob'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()
 

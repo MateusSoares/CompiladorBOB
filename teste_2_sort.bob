@@ -4,9 +4,10 @@ class Vetor {
 
     def Vetor(a, b, c, d, e);
 
+    def printa();
+
     def ordena();
 
-    def printaVetor();
 
 }
 
@@ -18,17 +19,28 @@ def Vetor::Vetor(a, b, c, d, e) {
     vet[3] = d ;
     vet[4] = e ;
 
+
+
 }
 
-def Vetor::ordena(; i, j, aux) {
+def Vetor::printa(;i ){
+    i = 0;
 
-    i = 0 ;
-    for (i; i < 4; i += 1) {
+    while ( i < 5 ) {
+        print("posicao ", i, ": ",vet[i]);
+        i += 1;
+    }
+
+}
+
+def Vetor::ordena(; i, j, a) {
+
+    for (i = 0; i < 4; i += 1) {
         for (j = i + 1; j < 5; j += 1) {
             if ( vet[j] < vet[i] ) {
-                aux = vet[i] ;
+                a = vet[i] ;
                 vet[i] = vet[j] ;
-                vet[j] = aux ;
+                vet[j] = a ;
             }
 
         }
@@ -36,19 +48,18 @@ def Vetor::ordena(; i, j, aux) {
 
 }
 
-def Vetor::printaVetor(; cont) {
 
-    cont = 0 ;
-    while ( cont < 5 ) {
-        print(vet[cont], " - ");
-    }
-
-}
-
-def main(; vetor) {
-
+def main (; vetor, i ) {
     vetor = Vetor(5,2,3,1,4) ;
+    print("Vetor Normal");
+    vetor->printa();
     vetor->ordena();
-    vetor->printaVetor();
+    print("----------------------");
+    print("Vetor Ordenado");
+    vetor->printa();
+
+
 
 }
+
+
