@@ -61,6 +61,18 @@ def executaEnquanto(com):
     novaSeqCom = com[2]
     sinal = com[1].filhos[0]
 
+    if tipoop1 == 'VETOR':
+        tipoInd =com[1].filhos[1].filhos[2].filhos[0]
+        index = com[1].filhos[1].filhos[2].filhos[1].filhos[0]
+        tipoop1,op1 = tipoValorVetor(tipoInd, op1, index)
+
+
+
+    if tipoop2 == 'VETOR':
+        tipoInd = com[1].filhos[2].filhos[2].filhos[0]
+        index = com[1].filhos[2].filhos[2].filhos[1].filhos[0]
+        tipoop2, op2 = tipoValorVetor(tipoInd, op2, index)
+
     aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
 
     comp = comparador(sinal,aux1,aux2)
@@ -81,6 +93,19 @@ def executaPara(com):
     tipoop2 = com[2].filhos[2].filhos[0]
     novaSeqCom = com[4]
     sinal = com[2].filhos[0]
+
+
+    if tipoop1 == 'VETOR':
+        tipoInd =com[1].filhos[1].filhos[2].filhos[0]
+        index = com[1].filhos[1].filhos[2].filhos[1].filhos[0]
+        tipoop1,op1 = tipoValorVetor(tipoInd, op1, index)
+
+
+
+    if tipoop2 == 'VETOR':
+        tipoInd = com[1].filhos[2].filhos[2].filhos[0]
+        index = com[1].filhos[2].filhos[2].filhos[1].filhos[0]
+        tipoop2, op2 = tipoValorVetor(tipoInd, op2, index)
 
     aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
 
@@ -140,6 +165,26 @@ def executa(ast):
             else:
                 pass
 
+def tipoValorVetor(tipoInd, op1, index ):
+    if tipoInd == 'INT':
+        index = int(index)
+    else:
+
+        index = ambiente.get_value(index)
+        index = int(index[2])
+
+
+    vetAux = ambiente.get_value(op1)
+    valor = vetAux[2][index]
+
+
+    if isinstance(valor, int):
+        tipoop1 = 'INT'
+    elif isinstance(valor, float):
+        tipoop1 = 'FLOAT'
+    elif isinstance(valor, str):
+        tipoop1 = 'STRING'
+    return tipoop1,valor
 
 def executaCond(op):
     op1 = op[1].filhos[1].filhos[1].filhos[0]
@@ -148,6 +193,18 @@ def executaCond(op):
     tipoop2 = op[1].filhos[2].filhos[0]
     novaSeqCom = op[2]
     sinal = op[1].filhos[0]
+
+    if tipoop1 == 'VETOR':
+        tipoInd =op[1].filhos[1].filhos[2].filhos[0]
+        index = op[1].filhos[1].filhos[2].filhos[1].filhos[0]
+        tipoop1,op1 = tipoValorVetor(tipoInd, op1, index)
+
+
+
+    if tipoop2 == 'VETOR':
+        tipoInd = op[1].filhos[2].filhos[2].filhos[0]
+        index = op[1].filhos[2].filhos[2].filhos[1].filhos[0]
+        tipoop2, op2 = tipoValorVetor(tipoInd, op2, index)
 
     aux1, aux2 = tipoVarRet(tipoop1, tipoop2, op1, op2)
 
@@ -261,11 +318,24 @@ def atribVetor(exp):
     #tamanho do vetor
     tam_vet = vet[1]
 
-    vet[2][index] = setValor(tipo, valor)
+
+    if tipo == 'VETOR':
+        vetAux = ambiente.get_value(valor)
+        tipo2 = exp[2].filhos[2].filhos[0]
+        index2 = exp[2].filhos[2].filhos[1].filhos[0]
+        if tipo2 == 'INT':
+            index2 = exp[2].filhos[2].filhos[1].filhos[0]
+            index2 = int(index2)
+        else:
+            index2 = ambiente.get_value(exp[2].filhos[2].filhos[1].filhos[0])
+            index2 = int(index2)
+        vet[2][index] = vetAux[2][index2]
+    else:
+        vet[2][index] = setValor(tipo, valor)
     tup = ['vetor', tam_vet, vet[2]]
     ambiente[pos1] = tup
 
-
+    #print(ambiente.get_value(pos1)[2])
 
 
 
@@ -275,7 +345,7 @@ def atribVetor(exp):
 
 
 def executaExp(exp):
-    print(exp)
+    #print(exp)
     #print(ambiente.get_function_name())
     if exp[0] == 'ATRIB':
         pos1 = exp[1].filhos[0]
@@ -301,6 +371,14 @@ def executaExp(exp):
                     elif item.filhos[0].filhos[0] == 'INT':
                         variav = item.filhos[0].filhos[1].filhos[0]
                         tup = ['var', 'int', variav]
+                        listaArgs.append(tup)
+                    elif item.filhos[0].filhos[0] == 'VETOR':
+                        tipoInd = item.filhos[0].filhos[2].filhos[0]
+                        index = item.filhos[0].filhos[2].filhos[1].filhos[0]
+                        variav = item.filhos[0].filhos[1].filhos[0]
+                        tipo, variav = tipoValorVetor(tipoInd, variav, index)
+
+                        tup = ['var', tipo.lower(), variav]
                         listaArgs.append(tup)
                     else:
                         variav = item.filhos[0].filhos[1].filhos[0]
@@ -333,6 +411,26 @@ def executaExp(exp):
             valor = ambiente.get_value(exp[2].filhos[1].filhos[0])
             ambiente[pos1] = valor
 
+        elif pos2 == 'VETOR':
+            valor = ambiente.get_value(exp[2].filhos[1].filhos[0])
+            tipo = exp[2].filhos[2].filhos[0]
+            if tipo == 'INT':
+                index = exp[2].filhos[2].filhos[1].filhos[0]
+                index = int(index)
+            else:
+                index = ambiente.get_value(exp[2].filhos[2].filhos[1].filhos[0])
+                index = int(index)
+
+            if isinstance(valor[2][index], int):
+                tup = ['var','int', valor[2][index]]
+            elif isinstance(valor[2][index], float):
+                tup = ['var','float', valor[2][index]]
+            elif isinstance(valor[2][index], str):
+                tup = ['var','string', valor[2][index]]
+
+            ambiente[pos1] = tup
+
+
         elif pos2 == '+' or pos2 == '-' or pos2 == '*' or pos2 == '/':
             valor = executaAritimeticas(exp[2].filhos)
             tup = ['var', 'int', valor]
@@ -356,6 +454,14 @@ def executaExp(exp):
                         elif item.filhos[0].filhos[0] == 'FLOAT':
                             variav = item.filhos[0].filhos[1].filhos[0]
                             listaArgs.append(variav)
+                        elif item.filhos[0].filhos[0] == 'VETOR':
+                            tipoInd = item.filhos[0].filhos[2].filhos[0]
+                            index = item.filhos[0].filhos[2].filhos[1].filhos[0]
+                            variav = item.filhos[0].filhos[1].filhos[0]
+                            tipo, variav = tipoValorVetor(tipoInd, variav, index)
+
+                            tup = ['var', tipo.lower(), variav]
+                            listaArgs.append(tup)
                         else:
                             variav = item.filhos[0].filhos[1].filhos[0]
                             valor = ambiente.get_value(variav)
@@ -385,6 +491,14 @@ def executaExp(exp):
                 variav = item.filhos[0].filhos[1].filhos[0]
                 tup = ['var', 'int', variav]
                 listaArgs.append(tup)
+            elif item.filhos[0].filhos[0] == 'VETOR':
+                tipoInd = item.filhos[0].filhos[2].filhos[0]
+                index = item.filhos[0].filhos[2].filhos[1].filhos[0]
+                variav = item.filhos[0].filhos[1].filhos[0]
+                tipo, variav = tipoValorVetor(tipoInd, variav, index)
+
+                tup = ['var', tipo.lower() , variav]
+                listaArgs.append(tup)
             else:
                 variav = item.filhos[0].filhos[1].filhos[0]
                 valor = ambiente.get_value(variav)
@@ -400,32 +514,77 @@ def executaExp(exp):
 
     elif exp[0] == 'PONTEIRO':
         listaArgs = list()
-        pos1 = exp[1].filhos[1].filhos[0]
-        listaArgs.append(pos1)
-        pos2 = exp[2].filhos[0]
-        pos3 = exp[3]
-        if pos3 is not None:
-            for item in pos3.filhos:
+        aponta = exp[1].filhos[1].filhos[0]
+        apontado = exp[2].filhos[0]
+        listaArgs.append(aponta)
+        args = exp[3]
+        #print(args.filhos[0].filhos[1].filhos[0])
+        if args is not None:
+            for item in args.filhos:
+                #print(item.filhos[0].filhos[1].filhos[0])
                 if item.filhos[0].filhos[0] == 'STRING':
                     variav = item.filhos[0].filhos[1].filhos[0]
                     listaArgs.append(variav)
+                elif item.filhos[0].filhos[0] == 'INT':
+                    variav = item.filhos[0].filhos[1].filhos[0]
+                    listaArgs.append(variav)
+                elif item.filhos[0].filhos[0] == 'FLOAT':
+                    variav = item.filhos[0].filhos[1].filhos[0]
+                    listaArgs.append(variav)
+                elif item.filhos[0].filhos[0] == 'VETOR':
+                    tipoInd = item.filhos[0].filhos[2].filhos[0]
+                    index = item.filhos[0].filhos[2].filhos[1].filhos[0]
+                    variav = item.filhos[0].filhos[1].filhos[0]
+                    tipo, variav = tipoValorVetor(tipoInd, variav, index)
+
+                    tup = ['var', tipo.lower(), variav]
+                    listaArgs.append(tup)
                 else:
                     variav = item.filhos[0].filhos[1].filhos[0]
                     valor = ambiente.get_value(variav)
                     listaArgs.append(valor)
 
 
-        ambiente.set_function(pos2, None , listaArgs)
-    elif exp[0] == '<':
-        print(exp[1].filhos[1].filhos)
+        res = ambiente.set_function(apontado, None , listaArgs)
+        #print(res.tipo)
+        executa(res)
+
+    elif exp[0] == 'ATRIBCOMP' or exp[0] == 'MENOSCOMP':
+        variav = exp[1].filhos[0]
+        tipo = exp[2].filhos[0]
+        valor = exp[2].filhos[1].filhos[0]
+        if tipo == 'INT':
+            valor = int(valor)
+        elif tipo == "FLOAT":
+            valor = float(valor)
+        elif tipo == "IDENT":
+            valor = ambiente.get_value(variav)
+            valor = castVar(valor)
+
+
+        variavAux = ambiente.get_value(variav)
+        valorVar = castVar(variavAux)
+
+        if exp[0] == 'ATRIBCOMP':
+            valorVar = valorVar + valor
+        elif exp[0] == 'MENOSCOMP':
+            valorVar = valorVar - valor
+        tup = ['var', variavAux[1] , valorVar]
+        ambiente[variav] = tup
+
+
+
+
+    else :
+        print('ola')
         pass
 
 
 
 if __name__ == '__main__':
     #nomeArquivo = 'teste_1_soma.bob'
-    #nomeArquivo = 'testebasico.txt'
-    nomeArquivo = 'testeVetor.txt'
+    nomeArquivo = 'testeCondRepet.txt'
+    #nomeArquivo = 'testeVetor.txt'
     #nomeArquivo = 'teste_2_sort.bob'
     arquivo = open(nomeArquivo, 'r')
     text = arquivo.read()

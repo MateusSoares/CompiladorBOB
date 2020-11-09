@@ -4,7 +4,8 @@ class Vetor {
 
     def Vetor(a, b, c, d, e);
 
-    def printaVetor();
+    def printa();
+
 
 }
 
@@ -12,22 +13,38 @@ def Vetor::Vetor(a, b, c, d, e) {
 
     vet[0] = a ;
     vet[1] = b ;
+    c = vet[0];
     vet[2] = c ;
     vet[3] = d ;
-    vet[4] = e ;
+    vet[4] = vet[1] ;
+
+
 
 }
 
-def Vetor::printaVetor(; cont) {
+def Vetor::printa(;i ){
+    i = 0;
 
-    cont = 0 ;
-    while ( cont < 5 ) {
-        print(vet[cont], " - ");
+    while ( i < vet[1] ) {
+        print("posicao ", i, ": ",vet[i]);
+        i += 1;
+    }
+
+    while ( i > 0 ) {
+        print("i = ", i);
+        i -= 1;
     }
 
 }
 
-def main (; vetor ) {
+
+
+
+def main (; vetor, i ) {
     vetor = Vetor(5,2,3,1,4) ;
-    vetor->printaVetor();
+
+    vetor->printa();
+
+
+
 }

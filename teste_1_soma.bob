@@ -6,6 +6,7 @@ class Soma {
 
     def Soma(x,y);
 
+
 }
 
 def Soma::Soma(x,y) {
@@ -22,6 +23,8 @@ def Soma::calcula() {
     return result;
 
 }
+
+
 
 def main (; x, y, resultado, soma) {
 

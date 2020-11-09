@@ -32,7 +32,7 @@ def main (; a , b , z, i, j) {
     }
 
 
-    for (i = 0 ; i < 4; i = i + 1) {
+    for (i = 0 ; i < 4; i += 1) {
         if ( i == z ) {
             print("Isso Aí Fera");
         }
